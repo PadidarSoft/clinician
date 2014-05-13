@@ -1,6 +1,6 @@
 <?php
 	if(!isset($_GET['page'])){
-		header("location:index.php?page=login");
+		header("location:personal.php?page=home");
  		exit();
 		}else{
 								  array_filter($_GET, 'trim_value'); 
@@ -17,7 +17,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Content-Language" content="fa">
-<title>سیستم رزرواسیون مجتمع پزشکان - ورود به سیستم</title>
+<title>سیستم رزرواسیون مجتمع پزشکان </title>
 <link href="style/lightbox.css" rel="stylesheet" />
 <link rel="stylesheet" href="style/style.css" type="text/css" media="screen">
 <script src="jquery/jquery.min.js"></script>
