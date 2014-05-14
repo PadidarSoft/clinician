@@ -1,4 +1,5 @@
 <?php
+define('AUTH_HASH','evesho sere chand?');
 function __md5($str,$random = false){
 	if($random){
 		return md5($str . microtime() . rand());

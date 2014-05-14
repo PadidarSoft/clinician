@@ -28,6 +28,17 @@
                 throw new Exception($e->getMessage());
             }
         }
+        public function getCountRow($query, $params=array()){
+        	try{
+        		$stmt = $this->datab->prepare($query);
+        		$stmt->execute($params);
+        		$stmt->fetch();
+        		return $stmt -> rowCount();
+        
+        	}catch(PDOException $e){
+        		throw new Exception($e->getMessage());
+        	}
+        }
         public function getRows($query, $params=array()){
             try{ 
                 $stmt = $this->datab->prepare($query); 
@@ -41,6 +52,7 @@
             try{ 
                 $stmt = $this->datab->prepare($query); 
                 $stmt->execute($params);
+                return $stmt -> rowCount();
                 }catch(PDOException $e){
                 throw new Exception($e->getMessage());
             }           
