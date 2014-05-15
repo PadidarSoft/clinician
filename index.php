@@ -1,6 +1,8 @@
 <?php
 include 'libs/bootstrap.php';
-
+if(isset($_GET['exit'])){
+	pateint_logout();
+}
 if(!isset($_GET['page'])){
 	header("location:index.php?page=login");
 	exit();
@@ -15,9 +17,6 @@ function trim_value(&$value)
 {
 	$value = trim($value);
 }
-if(isset($_GET['exit'])){
-	user_logout();
-}
 if(isset($_SESSION['pateint_id'])){
 	header('Location: personal.php?page=home');
 	exit();
@@ -29,8 +28,8 @@ if(isset($_SESSION['pateint_id'])){
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Content-Language" content="fa">
 <title>سیستم رزرواسیون مجتمع پزشکان</title>
-<link rel="stylesheet" href="style/style.css" type="text/css" media="screen">
-<script type="text/javascript" src="jquery/chkint.js"></script>
+<link rel="stylesheet" href="style/login.css" type="text/css" media="screen">
+<script type="text/javascript" src="js/chkint.js"></script>
 </head>
 <body>
 <?php 
@@ -68,10 +67,20 @@ switch ($page) {
 						   			<td align="right"><input class="btn2"  type='submit' name='submit' id='login' value='ورود' /></td>
 						   			<td></td>
 					   			</tr>
+					   			
 					   			<tr>
-					   			<td></td>
-					   			<td align="right"><div style='color:#F00; '><?php echo $_SESSION['pateint_error'] ?></div></td>
+						   			<td></td>
+						   			<td align="right">
+						   			<div style='color:#F00; '>
+						   			<?php
+						   			if(isset($_SESSION['pateint_error'])){
+						   			 	echo $_SESSION['pateint_error'];
+						   			}else{
+										$_SESSION['pateint_error']="";
+									}
+						   			 ?></div></td>
 					   			</tr>
+					   			
 							</table>
 					
 					  </div>
@@ -86,7 +95,7 @@ switch ($page) {
 	
 	case 'register':
 		if(isset($_POST['register'])){
-			if(!empty($_POST['name']) && !empty($_POST['uername']) 
+			if(!empty($_POST['name']) && !empty($_POST['username']) 
 			&& !empty($_POST['password']) && !empty($_POST['melicode'])
 			&& !empty($_POST['age']) && !empty($_POST['insurance']) 
 			&& !empty($_POST['mobile']) && !empty($_POST['security_code'])){
@@ -96,7 +105,7 @@ switch ($page) {
 				if($countrow<1){
 					$username=$_POST['username'];
 				}else{
-					die ("<SCRIPT LANGUAGE='JavaScript'>window.alert('نام کاربری انتخاب شده وجود دارد');
+					die ("<SCRIPT LANGUAGE='JavaScript'>window.alert('نام کاربری انتخاب شده وجود دارد')
 							window.history.back();
 							</SCRIPT>");
 				}
@@ -111,7 +120,7 @@ switch ($page) {
 						$email=$_POST['email'];
 					}else{
 						die ("<SCRIPT LANGUAGE='JavaScript'>
-	    						window.alert('فرمت ارسالی ایمیل صحیح نمی باشد');
+	    						window.alert('فرمت ارسالی ایمیل صحیح نمی باشد')
 								window.history.back();
 								</SCRIPT>");
 					}
@@ -160,14 +169,14 @@ switch ($page) {
 				
 				}else{
 							echo ("<SCRIPT LANGUAGE='JavaScript'>
-				    						window.alert('کد امنیتی وارد شده اشتباه می باشد');
+				    						window.alert('کد امنیتی وارد شده اشتباه می باشد')
 											window.history.back();
 											</SCRIPT>");
 				}
 						
 			}else{
 				echo ("<SCRIPT LANGUAGE='JavaScript'>
-    						window.alert('لطفا فیلد های ستاره دار را پر نمایید');
+    						window.alert('لطفا فیلد های ستاره دار را پر نمایید')
 							window.history.back();
 							</SCRIPT>");
 			}
@@ -184,7 +193,7 @@ switch ($page) {
 				
 				<table style="width: 720px; float: right;" dir="rtl">
 				
-				<tr style="height: 60px;">
+				<tr style="height: 50px;">
 					<td align="left"><label class="text">* نام و نام خانوادگی </label></td>
 					<td><input id="name" name="name"  class="input" type="text" style="width: 220px;" onblur="CheckEmpty();">
 					<div id="n" class="error"></div>
@@ -203,7 +212,7 @@ switch ($page) {
 				</tr>
 				
 				<tr>
-					<td style="height: 60px;" align="left"><label class="text">* کد ملی</label></td>
+					<td style="height: 50px;" align="left"><label class="text">* کد ملی</label></td>
 					<td>
 					<input id="melicode"  name="melicode" maxlength="10" class="input" type="text" placeholder="مثال: 0780123456"  onblur="CheckEmpty();" onKeyUp="numericFilter(this);">
 					<div id="mc" class="error"></div>	 
@@ -261,7 +270,7 @@ switch ($page) {
 				</tr>
 				
 				<tr>
-					<td style="height: 110px;" align="left"><label class="text"> آدرس</label></td>
+					<td style="height: 95px;" align="left"><label class="text"> آدرس</label></td>
 					<td><textarea id="address" name="address" class="input"  style="width: 300px; height: 70px;" onkeypress="return imposeMaxLength(this, 150);"  onblur="CheckEmpty();"></textarea></td>
 					<td></td>
 				</tr>

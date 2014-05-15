@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2014 at 07:11 PM
+-- Generation Time: May 15, 2014 at 11:41 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -36,7 +36,17 @@ CREATE TABLE IF NOT EXISTS `doctor` (
   `address` text COLLATE utf8_persian_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `doctor`
+--
+
+INSERT INTO `doctor` (`id`, `name`, `username`, `password`, `specialty_id`, `code`, `melicode`, `gender`, `mobile`, `email`, `education`, `img`, `address`) VALUES
+(1, 'محمد علی پور', 'mohammad', '360a55b533a95d7dd5a596472adf07ca', 3, '8563333333', '0780331516', 'male', '09159746635', 'md.alipour@yhoo.com', 'licence', 'none.png', 'sabzevar'),
+(2, 'سجاد مومنی تبار', 'sajjad', '9fe2ff9bce6876e3c91a3b5a87b84c44', 1, '124589633', '0780281470', 'male', '09370098186', 'md.alipour@yahoo.com', 'licence', 'non.jpg', 'sabzvar'),
+(3, 'مرتضا فسنقری', 'mori', '123evesho sere chand?', 2, '1478556622', '0780255556', 'male', '09355555555', 'mori@gmail.com', 'licence', 'none.jpg', 'sabevar'),
+(4, 'نیما قربانی', 'nima', '123evesho sere chand?', 2, '5555448888', '0780255366', 'male', '09361186021', 'nima@gmail.com', 'licence', 'none.jpg', 'sabzevar');
 
 -- --------------------------------------------------------
 
@@ -64,14 +74,15 @@ CREATE TABLE IF NOT EXISTS `insurance` (
   `type` varchar(50) COLLATE utf8_persian_ci NOT NULL,
   `des` text COLLATE utf8_persian_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `insurance`
 --
 
 INSERT INTO `insurance` (`id`, `cname`, `type`, `des`) VALUES
-(1, 'تامين اجتماعي', 'دولتي', 'بيمه');
+(1, 'تامین اجتماعی', 'دولتی', 'بیمه'),
+(2, 'آزاد', 'آزاد', 'بدون بیمه');
 
 -- --------------------------------------------------------
 
@@ -123,16 +134,16 @@ CREATE TABLE IF NOT EXISTS `pateint` (
   `mobile` varchar(11) COLLATE utf8_persian_ci NOT NULL,
   `address` text COLLATE utf8_persian_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `pateint`
 --
 
 INSERT INTO `pateint` (`id`, `name`, `username`, `password`, `insurance_id`, `melicode`, `gender`, `age`, `pic`, `email`, `mobile`, `address`) VALUES
-(1, 'محمد علي پور', 'mdsoft', '360a55b533a95d7dd5a596472adf07ca', 1, '0780331516', 'male', '23', 'none.png', 'md.alipour91@gmail.cm', '09159746635', 'سبزوار-24متري انقلاب'),
-(2, 'رضا نوروزي', 'reza', 'e7d384e7bf2796ad1151201bb190b874', 1, '1234566666', 'male', '25', '34911.jpg', '', '09159746635', ''),
-(3, 'سجاد مومني', 'sajjad', '360a55b533a95d7dd5a596472adf07ca', 1, '1234566666', 'male', '23', 'none.png', 'momenitabar@gmail.com', '09370098186', 'سبزوار-ميدانآل احمد');
+(1, 'محمد علی پور', 'mdsoft', '360a55b533a95d7dd5a596472adf07ca', 1, '0780331516', 'male', '23', 'none.png', 'md.alipour91@gmail.cm', '09159746635', 'سبزوار-24متری انقلاب'),
+(2, 'رضا نوروزی', 'reza', 'e7d384e7bf2796ad1151201bb190b874', 1, '1234566666', 'male', '25', '34911.jpg', '', '09159746635', ''),
+(3, 'سجاد مومنی', 'sajjad', '360a55b533a95d7dd5a596472adf07ca', 1, '1234566666', 'male', '23', 'none.png', 'momenitabar@gmail.com', '09370098186', 'سبزوار-میدانآل احمد');
 
 -- --------------------------------------------------------
 
@@ -142,12 +153,45 @@ INSERT INTO `pateint` (`id`, `name`, `username`, `password`, `insurance_id`, `me
 
 CREATE TABLE IF NOT EXISTS `specialty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `insurance_id` int(11) NOT NULL,
   `title` varchar(50) COLLATE utf8_persian_ci NOT NULL,
   `periood_time` varchar(20) COLLATE utf8_persian_ci NOT NULL,
-  `fee` varchar(20) COLLATE utf8_persian_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `specialty`
+--
+
+INSERT INTO `specialty` (`id`, `title`, `periood_time`) VALUES
+(1, 'قلب و عروق', '20'),
+(2, 'زنان و زایمان', '10'),
+(3, 'عمومی', '10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `spec_ins`
+--
+
+CREATE TABLE IF NOT EXISTS `spec_ins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `insurance_id` int(11) NOT NULL,
+  `specialty_id` int(11) NOT NULL,
+  `fee` varchar(5) COLLATE utf8_persian_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `spec_ins`
+--
+
+INSERT INTO `spec_ins` (`id`, `insurance_id`, `specialty_id`, `fee`) VALUES
+(1, 1, 1, '16000'),
+(2, 1, 2, '16000'),
+(3, 2, 1, '20000'),
+(4, 2, 2, '20000'),
+(5, 1, 3, '7000'),
+(6, 2, 3, '10000');
 
 -- --------------------------------------------------------
 
