@@ -10,14 +10,15 @@ $userInfo = pauth();
 ?>
  <body>
  <div align="center" style="width: 1024px; margin-left: auto; margin-right: auto;">
-<div id="a">
- <input class="input"  readonly="readonly"  title="برای انتخاب تاریخ کلیک کنید" type="text" id="datepicker11"  style="width:90px; cursor: pointer; color: #f00; font-size: 16px;"
-	 value="انتخاب تاریخ"/><label class="title"> : تاریخ های رزرو</label> 
-</div>
+		<div id="a">
+		 <input class="input"  readonly="readonly"  title="برای انتخاب تاریخ کلیک کنید" type="text" 
+		 id="datepicker11"  style="width:90px; cursor: pointer; color: #f00; font-size: 16px;"	 value="انتخاب تاریخ"/ onchange="sdate(this.value)">
+		 <label class="title"> : تاریخ های رزرو</label> 
+		</div>
  		<div class="main">
 		 <div class="right_panel">
 		 	<img alt="" src="images/cartable.png"><br>
-		 	<b class="title"><?php echo date::jdate('Y/n/j'); ?> :امروز </b>
+		 	<b class="title">امروز:<?php echo date::jdate('j F Y'); ?>  </b>
 		 	<hr>
 		 	<table>
 		 	<tr>
@@ -30,8 +31,7 @@ $userInfo = pauth();
 		 	<div class="menu" onclick="profile()">ویرایش اطلاعات</div>
 		 	<a href="index.php?exit=true"><div class="menu">خروج</div></a>
 		 </div>
-		  <div id="main_panel"  class="main_panel">
-		  </div>
+		  <div id="main_panel"  class="main_panel"></div>
 	 </div>
  </div>
  </body>

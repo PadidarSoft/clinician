@@ -18,7 +18,7 @@ $userInfo = pauth();
 	</style>
  	<b  class="title" style="font-size: 28px; color: #f00;">رزرو پزشک</b><br><hr>
  	<form action="">
- 	<table dir="rtl" style="width: 500px; float: right;">
+ 	<table dir="rtl" style="width: 650px; float: right;">
  	<tr>
  		<td align="left"><label class="text">تخصص </label></td>
  		<td align="right">
@@ -36,17 +36,15 @@ $userInfo = pauth();
  		</select>
  		</td>
  	</tr>
+ 	</table>
+ 	<div id="txtHint">
  	
- 	<tr>
- 	 	<td align="left"><label class="text">نام پزشک </label></td>
+ 	</div>
+	<table>
+	<tr>
+ 	 	<td align="left"></td>
  		<td align="right">
-		<div id="txtHint"></div>
- 		</td>
- 	</tr>
- 	<tr>
- 		<td align="left"></td>
- 		<td align="right">
-			
+		<div id="visit_time"></div>
  		</td>
  	</tr>
  	</table>
