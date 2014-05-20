@@ -69,6 +69,8 @@ xmlhttp.open("GET","get.php?q="+str,true);
 xmlhttp.send();
 }
 
+
+
 function fee(str)
 {
 if (str=="")
@@ -147,3 +149,28 @@ xmlhttp.open("GET","get.php?v="+str,true);
 xmlhttp.send();
 }
 
+function free(str)
+{
+if (str=="")
+  {
+  document.getElementById("k").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("k").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?k="+str,true);
+xmlhttp.send();
+}

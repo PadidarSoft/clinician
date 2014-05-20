@@ -51,7 +51,7 @@ $userInfo = pauth();
  	</form>
  	<?php
  	break;
-	
+ 	
  	case 'profile':
  			echo "profile";
  	break;

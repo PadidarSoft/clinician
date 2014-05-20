@@ -11,14 +11,14 @@
 
 @font-face {
     font-family:'BYekan';/*تعریف یک نام برای فونت*/
-    src:url('font/BYekan.eot');/*اکسپلورر 9 به بعد*/
+    src:url('../font/BYekan.eot');/*اکسپلورر 9 به بعد*/
     src:
 		local('bYekan'),/*بررسی نصب بودن فونت در سیستم کاربر*/
 	   local('b Yekan'),/*برای برخی از مرورگرها مانند سافاری*/
-	   url('font/BYekan.eot?#iefix') format('embedded-opentype'),/*هک برای اکسپلورر 8 و ماقبل*/
-	   url('font/BYekan.woff') format('woff'),/*مرورگر های جدید*/
-	   url('font/BYekan.ttf') format('truetype'),/*تمام مرورگرها به جزء اکسپلورر*/
-	   url('font/BYekan.svg#BYekan') format('svg');/*نسخه های قدیمی سیستم عامل iOS*/
+	   url('../font/BYekan.eot?#iefix') format('embedded-opentype'),/*هک برای اکسپلورر 8 و ماقبل*/
+	   url('../font/BYekan.woff') format('woff'),/*مرورگر های جدید*/
+	   url('../font/BYekan.ttf') format('truetype'),/*تمام مرورگرها به جزء اکسپلورر*/
+	   url('../font/BYekan.svg#BYekan') format('svg');/*نسخه های قدیمی سیستم عامل iOS*/
     font-style:normal;
     font-weight:normal;
 }
@@ -100,6 +100,9 @@ a:active {
 	display:inline-block;
 	background: #ccc ;
 	background: -webkit-linear-gradient(top, #f9f9f9, #eaeaea);
+	background: -o-linear-gradient (top,#f9f9f9, #eaeaea);/* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(top,#f9f9f9, #eaeaea); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(top,#f9f9f9, #eaeaea); /* Standard syntax */
 	box-shadow:0px 0px 4px 1px #999;
 	padding: 10px;
 	float:right;
@@ -263,6 +266,23 @@ a:active {
 		background: linear-gradient(#ffd801, #ffb401); /* Standard syntax */
 		cursor: pointer;
 	}
+.btn3{
+		width: 80px;
+		height:37px;
+		padding:2px;
+		color:#fff;
+		border-radius: 5px;
+		font-family:BYekan, Tahoma, Geneva, sans-serif;
+		background: -webkit-linear-gradient(#efefef, #8888); /* For Safari */
+		background: -o-linear-gradient (#ffd201, #ffa701);/* For Opera 11.1 to 12.0 */
+		background: -moz-linear-gradient(#ffd201, #ffa701); /* For Firefox 3.6 to 15 */
+		background: linear-gradient(#efefef, #8888); /* Standard syntax */
+		border:solid 1px #ccc;
+		border-left:0px;
+		display: inline-block;
+		outline: none;
+	}
+
 
 	
 .title{

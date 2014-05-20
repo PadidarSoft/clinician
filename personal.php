@@ -27,9 +27,9 @@ $userInfo = pauth();
 		 	</tr>
 		 	</table>
 		 	<br>
-		 	<div class="menu" onclick="reserve()">رزرو پزشک</div>
-		 	<div class="menu" onclick="profile()">ویرایش اطلاعات</div>
-		 	<a href="index.php?exit=true"><div class="menu">خروج</div></a>
+		 	<div class="menu" style="color: #777; font-size: 16px;" onclick="reserve()">رزرو پزشک</div>
+		 	<div class="menu" style="color: #777; font-size: 16px;" onclick="profile()">ویرایش اطلاعات</div>
+		 	<a href="index.php?exit=true"><div class="menu" style="color: #777; font-size: 16px;">خروج</div></a>
 		 </div>
 		  <div id="main_panel"  class="main_panel"></div>
 	 </div>

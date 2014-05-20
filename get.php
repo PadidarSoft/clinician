@@ -50,7 +50,6 @@ $getrows = $database->getRows("SELECT * FROM `doctor` WHERE specialty_id =?", ar
 }
 if(isset($_GET['s'])){
 $_SESSION['sdate']=$_GET['s'];
-
 }
 if(isset($_GET['f'])){
 	$specialty=$_SESSION['specialty'];
@@ -61,13 +60,35 @@ if(isset($_GET['f'])){
 	<?php
 
 }
+
+if(isset($_GET['k'])){
+	$date=$_SESSION['sdate'];
+	$k=$_GET['k'];
+	$getfree = $database->getCountRow("SELECT * FROM `visit_time` WHERE date =? and time=?", array($date,$k));
+	if($getfree<1){
+	?>
+	<div  class="btn2" style="width: 75px;line-height: 32px; height: 30px;">رزرو</div>
+	<?php 
+	}else{
+	?>
+	<div  class="error" style="font-size: 16px;">رزرو شده</div>
+	<?php 
+	}
+}
+
 if(isset($_GET['v'])){
 $v=$_GET['v'];
+if(isset($_SESSION['sdate'])){
 $date=$_SESSION['sdate'];
+}else{
+ $date=date::jdate('Y/m/j','','','','en');
+$_SESSION['sdate']= $date;
+}
+
 $specialty=$_SESSION['specialty'];
 ?>
 <hr>
-
+<div align="right">
 		<table style="width: 490px; background-color: #ccc; border-radius:8px;">
 		  <tr bgcolor="#ccc" height="35">
 		    <th class="title">تاریخ</th>
@@ -78,24 +99,40 @@ $specialty=$_SESSION['specialty'];
 		$getptimerows = $database->getRow("SELECT * FROM `specialty` WHERE id =?", array($specialty));
 		$getfeerow = $database->getRow("SELECT * FROM `spec_ins` WHERE specialty_id =?", array($specialty));
 		$getvisitrows = $database->getRow("SELECT * FROM `free_times` WHERE doctor_id =? and date=?", array($v,$date));
-		for (
-		$d = new DateTime($getvisitrows['start_time']), // Initialise DateTime object .
-		$i = new DateInterval('PT'.$getptimerows['periood_time'].'M'); // New 45 minute date interval
-		$d->format('H') < $getvisitrows['end_time']; // While hours (24h) less than 10
-		$d->add($i) // Add the interval to the DateTime object
-		)
-		{
+		/*
+
+		*/
 ?>
-		  <tr height="35"  class="nav">
+		
+		  <tr height="38"  class="nav">
 		    <td align="center" class="title" style="color: #777;"><?= $_SESSION['sdate'];?></td>
-		    <td align="center" class="title" style="color: #777;"><?= $d->format("H:i\n"); ?></td>
-		    <td align="center" style="width: 90px;"><div class="btn2" align="center" style="height:23px; line-height: 20px;">رزرو</div></td>
+		    <td align="center" width="90">
+			<select class="input" name="insurance" style="width: 80px;font-size: 16px;height: 30px;" onchange="free(this.value)">
+			<option selected="selected"></option>
+			<?php 
+
+		    for (
+		    		$d = new DateTime($getvisitrows['start_time']), // Initialise DateTime object .
+		    		$i = new DateInterval('PT'.$getptimerows['periood_time'].'M'); // New 45 minute date interval
+		    		$d->format('H') < $getvisitrows['end_time']; // While hours (24h) less than 10
+		    		$d->add($i) // Add the interval to the DateTime object
+		    )
+		    {
+		    ?>
+			
+			<option value="<?=$d->format("H:i\n");?>"><?= $d->format("H:i\n"); ?></option>
+		<?php 
+		    }  
+		  ?>
+			</select>
+		    </td>
+		    <td align="center" style="width: 90px;"><div id="k"></div></td>
 		  </tr>
 
-		  	<?php 
-		  }
-		  ?>
+
 		</table>
+		</div>
 		  <?php
 }
+
 ?>
