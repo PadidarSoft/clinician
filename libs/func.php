@@ -9,17 +9,17 @@ function __md5($str,$random = false){
 }
 
 function auth(){
-	global $mysql;
+	$database = new db("root", "", "localhost", "clinician", array(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES 'utf-8'"));
 	if(!isset($_SESSION['login_id'])){
 		header('Location: ../sitem/index.php');
 		exit();
 	}
-	$result = $mysql->query("SELECT * FROM manager WHERE id = '{$_SESSION['login_id']}'");
-	if(mysql_num_rows($result) < 1){
+	$info = $database->getCountRow("SELECT * FROM manager WHERE id=?",array($_SESSION['login_id']));
+	if($info < 1){
 		header('Location: ../sitem/index.php');
 		exit();
 	}
-	$userInfo = mysql_fetch_array($result);
+	$userInfo = $database->getRow("SELECT * FROM manager WHERE id=?",array($_SESSION['login_id']));
 	return $userInfo;
 }
 
