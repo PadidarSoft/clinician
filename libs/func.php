@@ -8,8 +8,6 @@ function __md5($str,$random = false){
 	return md5($str . AUTH_HASH);
 }
 
-<<<<<<< HEAD
-=======
 function auth(){
 	$database = new db("root", "", "localhost", "clinician", array(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES 'utf-8'"));
 	if(!isset($_SESSION['login_id'])){
@@ -25,7 +23,6 @@ function auth(){
 	return $userInfo;
 }
 
->>>>>>> 411ea6ffd01a5ec918789e97211147fb171ffd80
 function pauth(){
 	$database = new db("root", "", "localhost", "clinician", array(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES 'utf-8'"));
 	if(!isset($_SESSION['pateint_id'])){
