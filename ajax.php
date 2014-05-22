@@ -65,12 +65,19 @@ $userInfo = pauth();
  		if(isset($_SESSION['insurance_id'])){
  			 $insurance=$_SESSION['insurance_id'];
  		}else{
+ 			$getinsurance = $database->getCountRow("SELECT * FROM `spec_ins` WHERE insurance_id=? and specialty_id =?", 
+ 									array($userInfo['insurance_id'],$_SESSION['specialty']));
+ 			if($getinsurance==1){
+ 			 $insurance=$userInfo['insurance_id'];
+ 			}else{
  			 $insurance='2';
+ 			}
  		}
  		$specialty=$_SESSION['specialty'];
  		$time=$_SESSION['time_reserve'];
  		$doctor=$_SESSION['doctor_id'];
  		$pateint=$userInfo['id'];
+ 		$code=mt_rand(1000000000,9999999999);
  		$chkvisittime = $database->getCountRow("SELECT pateint_id FROM `visit_time` WHERE doctor_id =? and date=? ", array($doctor,$date));
 		if($chkvisittime>=1){
 		die("<div align='center' style='color:red;font-size:16px;'>امکان رزرو وقت برای هر پزشک در هر روز فقط یک بار می باشد</div> ");
@@ -80,9 +87,9 @@ $userInfo = pauth();
 			die("<div align='center' style='color:red;font-size:16px;'>رزرو وقت در این تاریخ و زمان به علت ثبت وقت در همین بازه در تخصصی دیگر امکان پذیر نمی باشد</div> ");
 		}
  		$insertrow = $database ->insertRow("INSERT INTO visit_time
-							(specialty_id,doctor_id,pateint_id,insurance_id,date,time) VALUES (?,?,?,?,?,?)"
- 							, array($specialty,$doctor,$pateint,$insurance,$date,$time));
- 		print("<div align='center' style='color:green;font-size:16px;'>ثبت وقت با موفقیت انجام گردید</div> ");
+							(specialty_id,doctor_id,pateint_id,insurance_id,date,time,code) VALUES (?,?,?,?,?,?,?)"
+ 							, array($specialty,$doctor,$pateint,$insurance,$date,$time,$code));
+ 		print("<div align='center' style='color:green;font-size:16px;'>ثبت وقت با موفقیت انجام گردید<br><b align='center' style='color:red;font-size:20px;'> کد پیگیری:".$code." </b></div>");
  		break;
  }
  ?>
