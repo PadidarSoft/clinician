@@ -51,6 +51,17 @@ $getrows = $database->getRows("SELECT * FROM `doctor` WHERE specialty_id =?", ar
 if(isset($_GET['s'])){
 $_SESSION['sdate']=$_GET['s'];
 }
+
+if(isset($_GET['delimg'])){
+	$database->updateRow("UPDATE `pateint` SET `pic`=? WHERE id=?", array('none.png',$userInfo['id']));
+?>
+<div align="center" style="width:77px;height:30px;line-height:30px; position: absolute; margin-right: 0px;z-index: 1001; background-color: #999; opacity:0.5;color:#fff;">
+بدون تصویر
+</div>
+<img src="images/pic/none.png" width="75" height="90" style="position: relative; border: 1px solid #ccc;">
+<?php 
+}
+
 if(isset($_GET['f'])){
 	$specialty=$_SESSION['specialty'];
 	$f=$_GET['f'];
