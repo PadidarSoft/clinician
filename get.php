@@ -15,7 +15,7 @@ $getrows = $database->getRows("SELECT * FROM `doctor` WHERE specialty_id =?", ar
 		    $getins = $database->getRow("SELECT * FROM `insurance` WHERE id =?", array($userInfo['insurance_id']));
 			?>
 			<select class="input" name="insurance" style="width: 200px;" onchange="fee(this.value)">
-			<option selected="selected"></option>
+			<option selected="selected">انتخاب کنید...</option>
 			<option value="<?=$getins['id']?>"><?=$getins['cname'] ?></option>
 			<?php
 			 	if ($getins['id']=='2'){
@@ -32,7 +32,7 @@ $getrows = $database->getRows("SELECT * FROM `doctor` WHERE specialty_id =?", ar
 	 	 	<td align="left"><label class="text">نام پزشک </label></td>
 	 		<td align="right">
 			<select class="input" name="menu" style="width: 200px;" onchange="visit_time(this.value)">
-			<option selected="selected"></option>
+			<option selected="selected">انتخاب کنید...</option>
 			<?php
 			foreach ($getrows as $row) {
 			?>
@@ -73,6 +73,28 @@ if(isset($_GET['f'])){
 
 }
 
+if(isset($_GET['news'])){
+$news=$_GET['news'];
+	$getnews = $database->getRow("SELECT * FROM `news` WHERE id =?", array($news));
+	?>
+	<a href="#" onclick="home()"> 
+		<div align="center" class="button"  style="margin-left: 15px;margin-top: -2px;position: absolute;">بازگشت</div>
+	</a>	
+	<div style="display: inline-block;vertical-align: middle;float: right;">
+	<img class="image" src="images/news/<?=$getnews['image']?>" width="100" height="100" style="border:1px solid #ccc;">
+	</div>
+	<div style="display: inline-block; float: right;vertical-align: right; padding: 5px;margin-top: 10px;">
+	<b class="title"  style="text-align: right;font-size: 18px;"><?=$getnews['title']?></b><br>
+	<b class="title" style="text-align: right; font-size: 12px;"><?=$getnews['date']?></b>
+	</div>
+	<br>
+	<div style="width:700px; display: inline-block; float: right;text-align: right;">
+	<p class="text"><?=$getnews['body']?></p>
+	</div>
+	<?php
+
+}
+
 if(isset($_GET['k'])){
 	$date=$_SESSION['sdate'];
 	$specialty=$_SESSION['specialty'];
@@ -98,6 +120,35 @@ $date=$_SESSION['sdate'];
  $date=date::jdate('Y/m/j','','','','en');
 $_SESSION['sdate']= $date;
 }
+$getd = $database->getRow("SELECT * FROM `doctor` WHERE id =?", array($v));
+
+$gets = $database->getRow("SELECT * FROM `specialty` WHERE id =?", array($getd['specialty_id']));
+?>
+<hr>
+<b class="title">
+:مشخصات پزشک
+</b>
+<div style="width: 600px; border: 1px soid #ccc; border-radius:5px;">
+<table dir="rtl">
+<tr>
+<td><img class="image" alt="" src="images/doctor/<?=$getd['img']?>" width="75" height="95"></td>
+<td>
+<table>
+<tr class="text">
+<td align="right">نام و نام خانوادگی:<?=$getd['name']?></td>
+</tr>
+<tr class="text">
+<td align="right">تخصص:<?=$gets['title']?></td>
+</tr>
+<tr class="text">
+<td align="right">کد:<?=$getd['code']?></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<?php
 $specialty=$_SESSION['specialty'];
 $nfreetime = $database->getCountRow("SELECT * FROM `free_times` WHERE doctor_id =? and date=?", array($v,$date));
 if($nfreetime>=1){
@@ -105,7 +156,6 @@ $getptimerows = $database->getRow("SELECT * FROM `specialty` WHERE id =?", array
 $getfeerow = $database->getRow("SELECT * FROM `spec_ins` WHERE specialty_id =?", array($specialty));
 $getvisitrows = $database->getRow("SELECT * FROM `free_times` WHERE doctor_id =? and date=?", array($v,$date));
 ?>
-<hr>
 <div align="right">
 		<table style="width: 490px; background-color: #ccc; border-radius:8px;">
 		  <tr bgcolor="#ccc" height="35">
@@ -144,7 +194,6 @@ $getvisitrows = $database->getRow("SELECT * FROM `free_times` WHERE doctor_id =?
 		  <?php
 			}else{
 			?>
-			<hr>
 		<div align="right">
 		<table style="width: 490px; background-color: #ccc; border-radius:8px;">
 		<tr>

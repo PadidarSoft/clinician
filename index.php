@@ -37,11 +37,11 @@ switch ($page) {
 	case 'login':
 ?>
 		<div style="width: 800px; display: block;    margin-left: auto;    margin-right: auto; margin-top: 80px;">
-			<div class="main_login">
+			<div id="main_login" class="main_login">
 			<a href="index.php?page=register">
-				<div align="center" class="button"  style="margin-left: 15px;margin-top: 10px;">ثبت نام در سیستم</div>
+				<div align="center" class="button"  style="margin-left: 15px;margin-top: 10px;position: absolute; float: left;">ثبت نام در سیستم</div>
 			</a>
-				<div style="margin-top: 60px;margin-right: 50px;">
+				<div style="margin-top: 20px;margin-right: 30px;">
 					<form action='login.php' method='post'>
 						<div align='right' class='l-box'>
 							 <table style="width: 390px;">
@@ -87,12 +87,56 @@ switch ($page) {
 					</form>
 				
 				</div>
+				<br>
+		<div align="right" class="title" style="font-size: 16px; color: #f00;">اخبار و اطلاعیه ها</div>
+		 <hr width="400" align="right">
+		 <div align="right">
+		 <?php
+		$news=$database->getRows("SELECT * FROM news WHERE `public`='1' ORDER BY `date` DESC,`id` DESC LIMIT 0,3");
+	  	foreach ($news as $row){
+		?>
+		<a href="#" onclick="lnews('<?=$row['id']; ?>');">
+		<div class="news">
+		- <b style="font-size: 16px;"><?=$row['title']?> (<?=$row['date']?>)</b>
+		<p style="font-size: 13px; margin-right: 5px;"><?=limitword($row['body'], 10) ?> (مشاهده کامل خبر) ...</p>
+		</div>
+		</a>
+		<?php } ?>
 				</div>
 		</div>	
-				
+		</div>		
 	<?php	
 	break;
 	
+	case 'news':
+		{
+			if(isset($_GET['id'])){
+			$news=$_GET['id'];
+			$getnews = $database->getRow("SELECT * FROM `news` WHERE `public`='1' and  id =? ", array($news));
+			?>
+			<div id="cnews">
+				<a href="#" onclick="home()"> 
+					<div align="center" class="button"  style="margin-left: 15px;margin-top: -5px;position: absolute;">بازگشت</div>
+				</a>	
+				<div style="display: inline-block;vertical-align: middle;float: right;">
+				<img class="image" src="images/news/<?=$getnews['image']?>" width="100" height="100" style="border:1px solid #ccc;">
+				</div>
+				<div style="display: inline-block; float: right;vertical-align: right; padding: 5px;margin-top: 10px;">
+				<b class="title"  style="text-align: right;font-size: 18px;"><?=$getnews['title']?></b><br>
+				<b class="title" style="text-align: right; font-size: 12px;"><?=$getnews['date']?></b>
+				</div>
+				<br>
+				<div style="width:700px; display: inline-block;text-align: right;">
+				<p class="text"><?=$getnews['body']?></p>
+				</div>
+				<?php
+			
+			}
+			?>
+			</div>
+			<?php
+			}
+			break;
 	case 'register':
 		if(isset($_POST['register'])){
 			if(!empty($_POST['name']) && !empty($_POST['username']) 

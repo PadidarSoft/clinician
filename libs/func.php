@@ -43,4 +43,11 @@ function pateint_logout(){
 	unset($_SESSION['pateint_error']);
 	return true;
 }
+
+function limitword($string, $limit){
+	$words = explode(" ",$string);
+	$output = implode(" ",array_splice($words,0,$limit));
+	return $output;
+}
+
 ?>

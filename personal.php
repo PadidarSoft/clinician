@@ -27,13 +27,37 @@ $userInfo = pauth();
 		 	</tr>
 		 	</table>
 		 	<br>
-		 	<div class="menu" style="color: #777; font-size: 16px;" onclick="reserve()">رزرو پزشک</div>
-		 	<div class="menu" style="color: #777; font-size: 16px;" onclick="history()">تاریخچه وقت های رزرو شده</div>
-		 	<div class="menu" style="color: #777; font-size: 16px;" onclick="profile()">ویرایش اطلاعات</div>
-		 	<a href="index.php?exit=true"><div class="menu" style="color: #777; font-size: 16px;">خروج</div></a>
+		 	<div class="menu"  onclick="home()">اخبار و اطلاعیه ها</div>
+		 	<div class="menu"  onclick="reserve()">رزرو پزشک</div>
+		 	<div class="menu"  onclick="history()">تاریخچه وقت های رزرو شده</div>
+		 	<div class="menu" onclick="profile()">ویرایش اطلاعات</div>
+		 	<a href="index.php?exit=true"><div class="menu" >خروج</div></a>
 		 </div>
 		  <div id="main_panel"  class="main_panel">
-		  <?php
+		 <b class="title" style="font-size: 25px; color: #f00;">اخبار و اطلاعیه ها</b>
+		 <hr>
+		 <?php
+		$news=$database->getRows("SELECT * FROM news ORDER BY `date` DESC,`id` DESC LIMIT 0,4");
+	  	foreach ($news as $row){
+		?>
+		<a href="#" onclick="news('<?=$row['id']; ?>');">
+		<div class="news">
+		<table align="right">
+		<tr>
+		<td>
+		<b style=" font-size: 18px;"><?=$row['title']; ?></b><br>
+		<b style=" font-size: 14px;"><?=$row['date']; ?></b>
+		<p dir="rtl" style="font-size: 13px;margin-top: -5px; "><?=limitword($row['body'], 10) ?> (مشاهده کامل خبر) ... </p>
+		</td>
+		<td>
+		<img class="image" src="images/news/<?=$row['image']?>" width="60" height="60" style="border:1px solid #ccc;">
+		</td>
+		</tr>
+		</table>
+		</div>
+		</a>
+		<?php
+	  }
 		if (isset($_POST['edit'])) {
 		if (!empty($_POST['name']) && !empty($_POST['melicode']) &&
 		 !empty($_POST['age']) && !empty($_POST['insurance']) &&

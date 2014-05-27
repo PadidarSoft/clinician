@@ -8,6 +8,37 @@ $userInfo = pauth();
 <?php
 include("header.php");
 switch ($page) {
+	
+	case 'home':
+		{
+			?>
+		<b class="title" style="font-size: 25px; color: #f00;">اخبار و اطلاعیه ها</b>
+		<hr>
+			<?php
+	  $news=$database->getRows("SELECT * FROM news ORDER BY `date` DESC,`id` DESC LIMIT 0,4");
+	  foreach ($news as $row){
+		?>
+		<a href="#" onclick="news('<?=$row['id']; ?>');">
+		<div class="news">
+		<table align="right">
+		<tr>
+		<td>
+		<b style=" font-size: 18px;"><?=$row['title']; ?></b><br>
+		<b style=" font-size: 14px;"><?=$row['date']; ?></b>
+		<p dir="rtl" style="font-size: 13px;margin-top: -5px; "><?=limitword($row['body'], 10) ?> (مشاهده کامل خبر) ... </p>
+		</td>
+		<td>
+		<img class="image" src="images/news/<?=$row['image']?>" width="60" height="60" style="border:1px solid #ccc;">
+		</td>
+		</tr>
+		</table>
+		</div>
+		</a>
+		<?php
+	  }
+		}
+	break;
+
 	case 'reserve':
 		?>
  	<style>
@@ -17,7 +48,7 @@ switch ($page) {
 			margin-top: 10px;
 		}
 </style>
- 	<b  class="title" style="font-size: 28px; color: #f00;">رزرو پزشک</b><br><hr>
+ 	<b  class="title" style="font-size: 25px; color: #f00;">رزرو پزشک</b><br><hr>
  	<form action="">
  	<table dir="rtl" style="width: 650px; float: right;">
  	<tr>
@@ -25,7 +56,7 @@ switch ($page) {
  		<td align="right">
  		<select name="specialty" class="input"  style="width: 200px;" onchange="
 					  showdoctor(this.value)">
- 		<option selected="selected"></option>
+ 		<option selected="selected">انتخاب کنید...</option>
  		 <?php
 		$getrows = $database->getRows("SELECT * FROM specialty");
 		foreach ($getrows as $row) { ?>
@@ -55,7 +86,10 @@ switch ($page) {
 		break;
 
 	case 'profile':
-	
+	?>
+		<b class="title" style="font-size: 25px; color: #f00;">ویرایش اطلاعات</b>
+		<hr>
+	<?php
 	$getuser = $database->getRow("SELECT * FROM pateint WHERE id =?", array($userInfo['id']));
 
 	?>
@@ -201,7 +235,38 @@ switch ($page) {
 	break;
 
 	case 'history':
-		echo "history";
+			?>
+		<b class="title" style="font-size: 25px; color: #f00;">تاریخچه وقت های رزرو شده</b>
+		<hr>
+		<table dir="rtl" style="width: 650px; background-color: #ccc; border-radius:8px;">
+		<tr bgcolor="#ccc" height="35">
+		<th>تاریخ</th>
+		<th>ساعت<th>
+		<th>تخصص</th>
+		<th>دکتر</th>
+		<th>بیمه</th>
+		<th>کد رهیگری</th>
+		</tr>
+		<?php
+		$getv = $database->getRows("SELECT * FROM `visit_time` WHERE `pateint_id` =?", array($userInfo['id']));
+		foreach ($getv as $row) {
+		$getd=$database->getRow("SELECT * FROM `doctor` WHERE `id` =?", array($row['doctor_id']));
+		$geti=$database->getRow("SELECT * FROM `insurance` WHERE `id` =?", array($row['insurance_id']));
+		$gets=$database->getRow("SELECT * FROM `specialty` WHERE `id` =?", array($row['specialty_id']));
+		?>
+		<tr height="38"  class="nav" align="center" style="color: #666">
+		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['date']?></td>
+		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['time']?></td>
+		<td bgcolor="#ccc"></td>
+		<td><?=$gets['title']?></td>
+		<td><?=$getd['name']?></td>
+		<td><?=$geti['cname']?></td>
+		<td><?=$row['code']?></td>
+		</tr>
+		<?php } ?>
+		</table>
+		
+		<?php
 		break;
 
 	case 'reserve_submit':
@@ -238,6 +303,10 @@ switch ($page) {
 							(specialty_id,doctor_id,pateint_id,insurance_id,date,time,code) VALUES (?,?,?,?,?,?,?)" , array($specialty, $doctor, $pateint, $insurance, $date, $time, $code));
 		print("<div align='center' style='color:green;font-size:16px;'>ثبت وقت با موفقیت انجام گردید<br><b align='center' style='color:red;font-size:20px;'> کد پیگیری:" . $code . " </b></div>");
 		break;
+		
+		default:
+			echo 'صفحه مورد نظر موجود نمی باشد';
+		break;	
 }
 
 ?>
