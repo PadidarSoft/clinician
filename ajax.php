@@ -53,7 +53,7 @@ $userInfo = pauth();
  	break;
  	
  	case 'profile':
- 			echo "profile";
+	echo "Profile";
  	break;
  	
  	case 'reserve_submit':

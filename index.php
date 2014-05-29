@@ -301,8 +301,7 @@ switch ($page) {
 		</div>
 		
 	<?php
-	break;
-	
+		break;
 	default:
 	?>	
 	
