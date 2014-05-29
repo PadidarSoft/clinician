@@ -60,12 +60,32 @@ a:active {
 	z-index: 1005;
 	
 }
+#b{
+	width:500px;
+	display: none;
+	position: absolute;
+	z-index: 1005;
+	
+}
 .main{
 	width: 1010px;
 	height: auto;
 	position:absolute;
 	margin-top:-10px;
 	background: #fff url(../images/background_res.jpg);
+	background-position: bottom left;
+	background-repeat: no-repeat;
+	box-shadow:0px 0px 4px 1px #999;
+	border-radius: 8px;
+	padding: 10px;
+	
+}
+.doctor_main{
+	width: 1010px;
+	height: auto;
+	position:absolute;
+	margin-top:-10px;
+	background: #fff url(../images/background_d_res.jpg);
 	background-position: bottom left;
 	background-repeat: no-repeat;
 	box-shadow:0px 0px 4px 1px #999;

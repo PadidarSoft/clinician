@@ -1,7 +1,7 @@
 <?php
-include 'libs/bootstrap.php';
+include '../libs/bootstrap.php';
 if(isset($_GET['exit'])){
-	pateint_logout();
+	doctor_logout();
 }
 if(!isset($_GET['page'])){
 	header("location:index.php?page=login");
@@ -17,7 +17,7 @@ function trim_value(&$value)
 {
 	$value = trim($value);
 }
-if(isset($_SESSION['pateint_id'])){
+if(isset($_SESSION['doctor_id'])){
 	header('Location: personal.php?page=home');
 	exit();
 }
@@ -28,20 +28,17 @@ if(isset($_SESSION['pateint_id'])){
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Content-Language" content="fa">
 <title>سیستم رزرواسیون مجتمع پزشکان</title>
-<link rel="stylesheet" href="style/login.css" type="text/css" media="screen">
-<script type="text/javascript" src="js/chkint.js"></script>
+<link rel="stylesheet" href="../style/login.css" type="text/css" media="screen">
+<script type="text/javascript" src="../js/chkint.js"></script>
 </head>
 <body>
 <?php 
 switch ($page) {
 	case 'login':
 ?>
-		<div style="width: 950px; display: block;    margin-left: auto;    margin-right: auto; margin-top: 50px;">
-			<div id="main_login" class="main_login">
-			<a href="index.php?page=register">
-				<div align="center" class="button"  style="margin-left: 15px;margin-top: 10px;position: absolute; float: left;">ثبت نام در سیستم</div>
-			</a>
-				<div style="margin-top: 20px;margin-right: 30px;">
+		<div style="width: 630px; display: block;    margin-left: auto;    margin-right: auto; margin-top: 100px;">
+			<div id="main_doctor_login" class="main_doctor_login">
+				<div style="margin-top: 20px;margin-right: 10px;">
 					<form action='login.php' method='post'>
 						<div align='right' class='l-box'>
 							 <table style="width: 390px;">
@@ -86,22 +83,6 @@ switch ($page) {
 					  </div>
 					</form>
 				
-				</div>
-				<br>
-		<div align="right" class="title" style="font-size: 16px; color: #f00;">اخبار و اطلاعیه ها</div>
-		 <hr width="400" align="right">
-		 <div align="right">
-		 <?php
-		$news=$database->getRows("SELECT * FROM news WHERE `public`='1' ORDER BY `date` DESC,`id` DESC LIMIT 0,3");
-	  	foreach ($news as $row){
-		?>
-		<a href="#" onclick="lnews('<?=$row['id']; ?>');">
-		<div class="news">
-		- <b style="font-size: 16px;"><?=$row['title']?> (<?=$row['date']?>)</b>
-		<p style="font-size: 13px; margin-right: 5px;"><?=limitword($row['body'], 10) ?> (مشاهده کامل خبر) ...</p>
-		</div>
-		</a>
-		<?php } ?>
 				</div>
 		</div>	
 		</div>		

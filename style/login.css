@@ -58,6 +58,17 @@ a:active {
 	padding: 10px;
 	
 }
+.main_doctor_login{
+	width: 600px;
+	height: 350px;
+	background: #fff url(../images/background_doctor_login.jpg);
+	background-position: bottom left;
+	background-repeat: no-repeat;
+	box-shadow:0px 0px 4px 1px #999;
+	border-radius: 10px;
+	padding: 10px;
+	
+}
 .main_404{
 	width: 800px;
 	height: 450px;
