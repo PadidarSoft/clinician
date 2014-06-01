@@ -12,12 +12,12 @@ $doctorInfo = dauth();
  <div align="center" style="width: 1024px; margin-left: auto; margin-right: auto;">
 		<div id="a">
 		 <input class="input"  readonly="readonly"  title="برای انتخاب تاریخ کلیک کنید" type="text"
-		 id="datepicker11"  style="width:90px; cursor: pointer; color: #f00; font-size: 16px;"	 value="انتخاب تاریخ"/ onchange="showdate(this.value)">
+		 id="datepicker11"  style="width:90px; cursor: pointer; color: #f00; font-size: 16px;"	 value="انتخاب تاریخ" onchange="showdate(this.value)">
 		 <label class="title"> : تاریخ های رزرو</label> 
 		</div>
 		<div id="b">
 		 <input class="input"  readonly="readonly"  title="برای انتخاب تاریخ کلیک کنید" type="text"
-		 id="datepicker11"  style="width:90px; cursor: pointer; color: #f00; font-size: 16px;"	 value="انتخاب تاریخ"/ onchange="showdate(this.value)">
+		 id="datepicker8"  style="width:90px; cursor: pointer; color: #f00; font-size: 16px;" value="انتخاب تاریخ" onchange="gdate(this.value)">
 		 <label class="title"> : تاریخ های رزرو</label> 
 		</div>
  		<div class="doctor_main">

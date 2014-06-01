@@ -117,7 +117,7 @@ $_SESSION['doctor_id']=$v;
 if(isset($_SESSION['sdate'])){
 $date=$_SESSION['sdate'];
 }else{
- $date=date::jdate('Y/m/j','','','','en');
+ $date=date::jdate('Y/m/d','','','','en');
 $_SESSION['sdate']= $date;
 }
 $getd = $database->getRow("SELECT * FROM `doctor` WHERE id =?", array($v));
@@ -169,20 +169,16 @@ $getvisitrows = $database->getRow("SELECT * FROM `free_times` WHERE doctor_id =?
 			<select class="input" name="insurance" style="width: 80px;font-size: 16px;height: 30px;" onchange="free(this.value)">
 			<option selected="selected"></option>
 			<?php 
-
-		    for (
-		    		$d = new DateTime($getvisitrows['start_time']), // Initialise DateTime object .
-		    		$i = new DateInterval('PT'.$getptimerows['periood_time'].'M'); // New 45 minute date interval
-		    		$d->format('H') < $getvisitrows['end_time']; // While hours (24h) less than 10
-		    		$d->add($i) // Add the interval to the DateTime object
-		    )
-		    {
-		    ?>
-			
-			<option value="<?=$d->format("H:i\n");?>"><?= $d->format("H:i\n"); ?></option>
-		<?php 
-		    }  
-		  ?>
+					$start    = new DateTime($getvisitrows['start_time']);
+					$end      = new DateTime($getvisitrows['end_time']);
+					$interval = new DateInterval('PT'.$getptimerows['periood_time'].'M');
+				$period   = new DatePeriod($start, $interval, $end);
+				foreach ($period as $dt){
+	    	?>
+				<option value="<?= $dt->format('H:i');?>"><?= $dt->format('H:i');?></option>
+			<?php 
+		    	}  
+		 		 ?>
 			</select>
 		    </td>
 		    <td align="center" style="width: 90px;"><div id="k"></div></td>

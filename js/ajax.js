@@ -20,6 +20,8 @@ xmlhttp.open("GET","ajax.php?page=reserve",true);
 xmlhttp.send();
 }
 
+
+
 function dvisit_time()
 {
 var xmlhttp;
@@ -41,6 +43,7 @@ xmlhttp.onreadystatechange=function()
 xmlhttp.open("GET","ajax.php?page=visit_time",true);
 xmlhttp.send();
 }
+
 
 function home()
 {
@@ -186,6 +189,112 @@ xmlhttp.open("GET","get.php?news="+str,true);
 xmlhttp.send();
 }
 
+function hour(str)
+{
+if (str=="")
+  {
+  document.getElementById("stmt").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("stmt").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?st="+str,true);
+xmlhttp.send();
+}
+
+function sub(str)
+{
+if (str=="")
+  {
+  document.getElementById("submit_time").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("submit_time").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?sub="+str,true);
+xmlhttp.send();
+}
+
+
+function em(str)
+{
+if (str=="")
+  {
+  document.getElementById("em").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("em").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?em="+str,true);
+xmlhttp.send();
+}
+
+
+function minute(str)
+{
+if (str=="")
+  {
+  document.getElementById("endtime").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("endtime").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?mt="+str,true);
+xmlhttp.send();
+}
+
 function delimg(str)
 {
 if (str=="")
@@ -289,6 +398,34 @@ xmlhttp.onreadystatechange=function()
 xmlhttp.open("GET","get.php?s="+str,true);
 xmlhttp.send();
 }
+
+
+function gdate(str)
+{
+if (str=="")
+  {
+  document.getElementById("gdate").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("gdate").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?gd="+str,true);
+xmlhttp.send();
+}
+
 
 function visit_time(str)
 {

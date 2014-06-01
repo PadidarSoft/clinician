@@ -70,10 +70,10 @@ switch ($page) {
 						   			<td align="right">
 						   			<div style='color:#F00; '>
 						   			<?php
-						   			if(isset($_SESSION['pateint_error'])){
-						   			 	echo $_SESSION['pateint_error'];
+						   			if(isset($_SESSION['doctor_error'])){
+						   			 	echo $_SESSION['doctor_error'];
 						   			}else{
-										$_SESSION['pateint_error']="";
+										$_SESSION['doctor_error']="";
 									}
 						   			 ?></div></td>
 					   			</tr>

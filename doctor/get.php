@@ -8,24 +8,24 @@ $getrows = $database->getRows("SELECT * FROM `doctor` WHERE specialty_id =?", ar
 ?>
 <table dir="rtl" style="float: right; margin-right: 57px;">
 	<tr>
-		    <td align="left" class="text">نوع بیمه</td>
-		    <td align="right">
-		    <?php  
-		    $getinsurance = $database->getRow("SELECT * FROM `spec_ins` WHERE specialty_id =?", array($_SESSION['specialty']));
-		    $getins = $database->getRow("SELECT * FROM `insurance` WHERE id =?", array($userInfo['insurance_id']));
+	    <td align="left" class="text">نوع بیمه</td>
+	    <td align="right">
+	    <?php  
+	    $getinsurance = $database->getRow("SELECT * FROM `spec_ins` WHERE specialty_id =?", array($_SESSION['specialty']));
+	    $getins = $database->getRow("SELECT * FROM `insurance` WHERE id =?", array($userInfo['insurance_id']));
+		?>
+		<select class="input" name="insurance" style="width: 200px;" onchange="fee(this.value)">
+		<option selected="selected">انتخاب کنید...</option>
+		<option value="<?=$getins['id']?>"><?=$getins['cname'] ?></option>
+		<?php
+		 	if ($getins['id']=='2'){
+			print("</select>");
+			}else{
+			print("<option value='2'>آزاد</option></select>");
+			}
 			?>
-			<select class="input" name="insurance" style="width: 200px;" onchange="fee(this.value)">
-			<option selected="selected">انتخاب کنید...</option>
-			<option value="<?=$getins['id']?>"><?=$getins['cname'] ?></option>
-			<?php
-			 	if ($getins['id']=='2'){
-				print("</select>");
-				}else{
-				print("<option value='2'>آزاد</option></select>");
-				}
-				?>
-		    </td>
-		    <td><div id="fee"></div></td>
+	    </td>
+	    <td><div id="fee"></div></td>
 	</tr>
 		
  	 	<tr>
@@ -94,6 +94,170 @@ $getrows = $database->getRows("SELECT * FROM `doctor` WHERE specialty_id =?", ar
 		</div>	
 		<?php
 		}
+}
+
+if(isset($_GET['st'])){
+	$_SESSION['start_time']=$_GET['st'];
+	$st=$_GET['st'];
+	?>
+	<select name="startminutetime" class="input" onchange="minute(this.value)">
+		<option selected="selected">دقیقه</option>
+	<?php
+	if($date==date::jdate('Y/m/d', '', '', '', 'en')){
+		$startmt=date::jdate('i', '', '', '', 'en');
+	}else{
+		$startmt=0;
+	}
+	if($st==date::jdate('H', '', '', '', 'en')){
+		$startmt=date::jdate('i', '', '', '', 'en');
+	}else{
+		$startmt=0;
+	}
+		for($i=$startmt;$i<=59;$i++){
+	?>
+		<option value="<?=sprintf("%02d", $i);?>"><?=sprintf("%02d", $i);?></option>
+	<?php
+		}
+	?>
+	</select>	
+	<?php
+}
+
+
+if(isset($_GET['sub'])and $_GET['sub']!==""){
+	?>
+	
+	<input type="button" name="Send" value="ثبت اطلاعات" class="btn2" style="width: 123px;" 
+	onclick="formget(this.form, 'send.php');" />
+	
+	<?php
+}
+
+if(isset($_GET['em'])){
+	$eht=$_GET['em'];
+	$minute=sprintf("%02d",$_SESSION['smt']);
+	if(($eht==$_SESSION['start_time']) or ($eht==$_SESSION['start_time']+1 or $minute>=60)){
+			$minute=sprintf("%02d",$_SESSION['smt']);
+		}else{
+			$minute="00";
+		}
+		?>
+		<select name="endminutetime" class="input" onchange="sub(this.value)">
+			<option selected="selected">دقیقه</option>
+			<?php
+				for($i=$minute;$i<=59;$i++){
+			?>
+				<option value="<?=sprintf("%02d", $i);?>"><?=sprintf("%02d", $i);?></option>
+			<?php
+			}
+			?>
+		</select>				
+		<?php
+}
+if(isset($_GET['mt'])){
+	$getptimerows = $database->getRow("SELECT * FROM `specialty` WHERE id =?", array($userInfo['specialty_id']));
+	if(isset($_SESSION['start_time'])){
+		$hour=$_SESSION['start_time'];
+	}else{
+		$hour="00";
+	}
+	$minute=$_GET['mt']+$getptimerows['periood_time'];
+	if($minute>=60){
+		$hour=$hour+1;
+		$minute=$minute-60;
+		if($hour+1>24){
+			$hour="23";
+			$minute="59";
+		}
+	}
+		$hour=sprintf("%02d",$hour);
+		$minute=sprintf("%02d",$minute);
+		$_SESSION['smt']=$minute;
+	?>
+	<div id="em" style="display:inline-block;">
+		<select class="input" style="width: 57px;" disabled="disabled"></select>
+	</div>
+	:
+	<select name="endthourtime" class="input" onchange="em(this.value)">
+		<option selected="selected">ساعت</option>
+	<?php
+		for($i=$hour;$i<=23;$i++){
+	?>
+		<option value="<?=sprintf("%02d", $i);?>"><?=sprintf("%02d", $i);?></option>
+	<?php
+	}
+	?>
+	</select>		
+	<?php
+	}
+
+if(isset($_GET['gd'])){
+	$date=$_GET['gd'];
+	?>
+		<div id="showresult">
+	<form action="#">
+
+		<table dir="rtl">
+			<tr>
+				<td align="left">تاریخ:</td>
+				<td align="right" class="title" style="font-size: 17px;color: #f00;"><?=$date?></td>
+			</tr>
+			<tr>
+				<td align="left">زمان شروع:</td>
+				<td>
+					<div id="stmt" style="display: inline-block;">
+					<select name="startminutetime" class="input" disabled="disabled" onchange="minute(this.value)">
+					<?php
+					if($date==date::jdate('Y/m/d', '', '', '', 'en')){
+						$startmt=date::jdate('i', '', '', '', 'en');
+					}else{
+						$startmt=0;
+					}
+						for($i=$startmt;$i<=59;$i++){
+					?>
+						<option value="<?=sprintf("%02d", $i);?>"><?=sprintf("%02d", $i);?></option>
+					<?php
+						}
+					?>
+					</select>
+					</div>
+					:
+					<select name="starthourtime" class="input" onchange="hour(this.value)">
+					<option selected="selected">ساعت</option>
+					<?php
+					if($date==date::jdate('Y/m/d', '', '', '', 'en')){
+						$startht=date::jdate('H', '', '', '', 'en');
+					}else{
+						$startht=0;
+					}
+						for($i=$startht;$i<=23;$i++){
+					?>
+						<option value="<?=sprintf("%02d", $i);?>"><?=sprintf("%02d", $i);?></option>
+					<?php
+						}
+					?>
+					</select>	
+					</td>
+			</tr>
+			
+			<tr height="80">
+				<td align="left">زمان پایان:</td>
+				<td>
+					<div id="endtime"></div>
+				</td>
+			</tr>
+			<tr height="30">
+				<td></td>
+				<td>
+					<div id="submit_time"><input type="button" disabled="disabled" name="Send" value="ثبت اطلاعات" class="btn3" style="width: 123px;" 
+					onclick="formget(this.form, 'send.php');" /></div>
+				</td>
+			</tr>
+		</table>
+		
+	</form>
+	</div>
+	<?php
 }
 
 if(isset($_GET['delimg'])){
