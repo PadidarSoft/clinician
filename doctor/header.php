@@ -22,6 +22,7 @@
 <title>سیستم رزرواسیون مجتمع پزشکان </title>
 <link rel="stylesheet" href="../style/personal.css" type="text/css" media="screen">
 <script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript" src="../js/magic.js"></script>
 <link type="text/css" href="../style/jquery-ui-1.8.14.css" rel="stylesheet" />
  <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery.ui.datepicker-cc.all.min.js"></script>
@@ -31,6 +32,13 @@
 	        	dateFormat: 'yy/mm/dd',
 	            minDate: '0d',
 	            maxDate: '+6d'
+	        });
+	        
+	        $('#datepicker8').datepicker({
+	            dateFormat: 'yy/mm/dd',
+	            numberOfMonths: 1,
+	            minDate: '0d',
+	            showButtonPanel: false
 	        });
 	    });
 </script>

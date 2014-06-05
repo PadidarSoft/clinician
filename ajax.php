@@ -299,7 +299,7 @@ switch ($page) {
 		if (isset($_SESSION['sdate'])) {
 			$date = $_SESSION['sdate'];
 		} else {
-			$date = date::jdate('Y/m/j', '', '', '', 'en');
+			$date = date::jdate('Y/m/d', '', '', '', 'en');
 		}
 		if (isset($_SESSION['insurance_id'])) {
 			$insurance = $_SESSION['insurance_id'];

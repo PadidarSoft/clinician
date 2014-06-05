@@ -16,7 +16,7 @@ switch ($page) {
 	
 	case 'visit_time':
 		{
-		if (isset($_SESSION['sdate'])) {
+		if (isset($_SESSION['showdate'])) {
 			$date = $_SESSION['showdate'];
 		} else {
 			$date = date::jdate('Y/m/d', '', '', '', 'en');
@@ -25,11 +25,11 @@ switch ($page) {
 		<style>
 		#a{
 			display: inline-block;
-			margin-left: -170px;
+			margin-left: -150px;
 			margin-top: 10px;
 		}
 		</style>
-		<b class="title" style="font-size: 25px; color: #f00; margin-right:50px;">مشاهده وقت های رزرو شده</b>
+		<b class="title" style="font-size: 25px; color: #f00; margin-right:55px;">مشاهده وقت های رزرو شده</b>
 		<hr>
 		<div id="visit_time">
 		<?php
@@ -82,46 +82,18 @@ switch ($page) {
 	case 'reserve':
 		?>
  	<style>
-		#a{
+		#b{
 			display: inline-block;
 			margin-left: -170px;
 			margin-top: 10px;
 		}
-</style>
- 	<b  class="title" style="font-size: 25px; color: #f00;">رزرو پزشک</b><br><hr>
+	</style>
+ 	<b  class="title" style="font-size: 25px; color: #f00;">تعریف روزهای فعال</b><br><hr>
+ 	<div id="gdate" align="right">
  	<form action="">
- 	<table dir="rtl" style="width: 650px; float: right;">
- 	<tr>
- 		<td align="left"><label class="text">تخصص </label></td>
- 		<td align="right">
- 		<select name="specialty" class="input"  style="width: 200px;" onchange="
-					  showdoctor(this.value)">
- 		<option selected="selected">انتخاب کنید...</option>
- 		 <?php
-		$getrows = $database->getRows("SELECT * FROM specialty");
-		foreach ($getrows as $row) { ?>
-			 <option value="<?=$row['id']?>"><?=$row['title'] ?></option>
-		  <?php
-		}
-
-		?>
-
- 		</select>
- 		</td>
- 	</tr>
- 	</table>
- 	<div id="txtHint">
-
- 	</div>
-	<table>
-	<tr>
- 	 	<td align="left"></td>
- 		<td align="right">
-		<div id="visit_time"></div>
- 		</td>
- 	</tr>
- 	</table>
+ 	d
  	</form>
+ 	</div>
  	<?php
 		break;
 

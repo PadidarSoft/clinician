@@ -56,12 +56,14 @@ function dauth(){
 function pateint_logout(){
 	unset($_SESSION['pateint_id']);
 	unset($_SESSION['pateint_error']);
+	unset($_SESSION['sdate']);
 	return true;
 }
 
 function doctor_logout(){
 	unset($_SESSION['doctor_id']);
 	unset($_SESSION['doctor_error']);
+	unset($_SESSION['showdate']);
 	return true;
 }
 
