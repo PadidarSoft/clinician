@@ -1,6 +1,6 @@
 <?php
-include('libs/bootstrap.php');
-$userInfo = pauth();
+include('../libs/bootstrap.php');
+$userInfo = dauth();
 
 ?>
 <!DOCTYPE html>
@@ -8,34 +8,74 @@ $userInfo = pauth();
 <?php
 include("header.php");
 switch ($page) {
-	
 	case 'home':
 		{
+			
+		}
+	break;
+	
+	case 'visit_time':
+		{
+		if (isset($_SESSION['sdate'])) {
+			$date = $_SESSION['showdate'];
+		} else {
+			$date = date::jdate('Y/m/d', '', '', '', 'en');
+		}
 			?>
-		<b class="title" style="font-size: 25px; color: #f00;">اخبار و اطلاعیه ها</b>
+		<style>
+		#a{
+			display: inline-block;
+			margin-left: -170px;
+			margin-top: 10px;
+		}
+		</style>
+		<b class="title" style="font-size: 25px; color: #f00; margin-right:50px;">مشاهده وقت های رزرو شده</b>
 		<hr>
-			<?php
-	  $news=$database->getRows("SELECT * FROM news ORDER BY `date` DESC,`id` DESC LIMIT 0,4");
-	  foreach ($news as $row){
+		<div id="visit_time">
+		<?php
+		$nfreetime = $database->getCountRow("SELECT * FROM `visit_time` WHERE `doctor_id` =? AND `date`=?
+		ORDER BY `time` ASC,`id` ASC ", array($userInfo['id'],$date));
+		if($nfreetime>=1){
 		?>
-		<a href="#" onclick="news('<?=$row['id']; ?>');">
-		<div class="news">
-		<table align="right">
+		<table dir="rtl" style="width: 650px; background-color: #ccc; border-radius:8px;">
+		<tr bgcolor="#ccc" height="35">
+		<th>تاریخ</th>
+		<th>ساعت<th>
+		<th>نام بیمار</th>
+		<th>بیمه</th>
+		<th>کد رهیگری</th>
+		</tr>
+		<?php
+		$getv = $database->getRows("SELECT * FROM `visit_time` WHERE `doctor_id` =? AND `date`=?
+		ORDER BY `time` ASC,`id` ASC ", array($userInfo['id'],$date));
+		foreach ($getv as $row) {
+		$getd=$database->getRow("SELECT * FROM `pateint` WHERE `id` =?", array($row['pateint_id']));
+		$geti=$database->getRow("SELECT * FROM `insurance` WHERE `id` =?", array($row['insurance_id']));
+		?>
+		<tr height="38"  class="nav" align="center" style="color: #666">
+		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['date']?></td>
+		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['time']?></td>
+		<td bgcolor="#ccc"></td>
+		<td><?=$getd['name']?></td>
+		<td><?=$geti['cname']?></td>
+		<td><?=$row['code']?></td>
+		</tr>
+		<?php } ?>
+		</table>
+		<?php 
+		}else{
+		?>
+		<div align="center">
+		<table style="width: 490px; background-color: #ccc; border-radius:8px;">
 		<tr>
 		<td>
-		<b style=" font-size: 18px;"><?=$row['title']; ?></b><br>
-		<b style=" font-size: 14px;"><?=$row['date']; ?></b>
-		<p dir="rtl" style="font-size: 13px;margin-top: -5px; "><?=limitword($row['body'], 10) ?> (مشاهده کامل خبر) ... </p>
-		</td>
-		<td>
-		<img class="image" src="images/news/<?=$row['image']?>" width="60" height="60" style="border:1px solid #ccc;">
+				<div class="error" align="center">در تاریخ <?=$date?> رزرو وقت صورت نگرفته است</div>
 		</td>
 		</tr>
 		</table>
-		</div>
-		</a>
+		</div>	
 		<?php
-	  }
+		}
 		}
 	break;
 
@@ -83,32 +123,6 @@ switch ($page) {
  	</table>
  	</form>
  	<?php
-<<<<<<< HEAD
- 	break;
- 	
- 	case 'profile':
-	echo "Profile";
- 	break;
- 	
- 	case 'reserve_submit':
- 		if(isset($_SESSION['sdate'])){
- 			 $date=$_SESSION['sdate'];
- 		}else{
- 			 $date=date::jdate('Y/m/j','','','','en');
- 		}
- 		if(isset($_SESSION['insurance_id'])){
- 			 $insurance=$_SESSION['insurance_id'];
- 		}else{
- 			 $insurance='2';
- 		}
- 		$specialty=$_SESSION['specialty'];
- 		$time=$_SESSION['time_reserve'];
- 		$doctor=$_SESSION['doctor_id'];
- 		$pateint=$userInfo['id'];
- 		$chkvisittime = $database->getCountRow("SELECT pateint_id FROM `visit_time` WHERE doctor_id =? and date=? ", array($doctor,$date));
-		if($chkvisittime>=1){
-		die("<div align='center' style='color:red;font-size:16px;'>امکان رزرو وقت برای هر پزشک در هر روز فقط یک بار می باشد</div> ");
-=======
 		break;
 
 	case 'profile':
@@ -269,7 +283,7 @@ switch ($page) {
 		<th>تاریخ</th>
 		<th>ساعت<th>
 		<th>تخصص</th>
-		<th>پزشک</th>
+		<th>دکتر</th>
 		<th>بیمه</th>
 		<th>کد رهیگری</th>
 		</tr>
@@ -299,7 +313,7 @@ switch ($page) {
 		if (isset($_SESSION['sdate'])) {
 			$date = $_SESSION['sdate'];
 		} else {
-			$date = date::jdate('Y/m/j', '', '', '', 'en');
+			$date = date::jdate('Y/m/d', '', '', '', 'en');
 		}
 		if (isset($_SESSION['insurance_id'])) {
 			$insurance = $_SESSION['insurance_id'];
@@ -317,10 +331,9 @@ switch ($page) {
 		$doctor = $_SESSION['doctor_id'];
 		$pateint = $userInfo['id'];
 		$code = mt_rand(1000000000, 9999999999);
-		$chkvisittime = $database->getCountRow("SELECT * FROM `visit_time` WHERE doctor_id =? and date=? and pateint_id=? ", array($doctor, $date,$pateint));
+		$chkvisittime = $database->getCountRow("SELECT pateint_id FROM `visit_time` WHERE doctor_id =? and date=? ", array($doctor, $date));
 		if ($chkvisittime >= 1) {
 			die("<div align='center' style='color:red;font-size:16px;'>امکان رزرو وقت برای هر پزشک در هر روز فقط یک بار می باشد</div> ");
->>>>>>> a8ed6794923d67d9565beb9b1d7f485cc44fb5fd
 		}
 		$chkvisittime2 = $database->getCountRow("SELECT pateint_id FROM `visit_time` WHERE time =? and date=?", array($time, $date));
 		if ($chkvisittime2 >= 1) {

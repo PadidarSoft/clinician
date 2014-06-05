@@ -1,3 +1,36 @@
+function home()
+{
+	window.location.href='index.php?page=login';
+}
+
+function lnews(str)
+{
+if (str=="")
+  {
+  document.getElementById("main_login").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("main_login").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","index.php?page=news&id="+str,true);
+xmlhttp.send();
+}
+
+
+
 function numericFilter(txb) {
    txb.value = txb.value.replace(/[^\0-9]/ig, "");
 }

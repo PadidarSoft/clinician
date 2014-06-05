@@ -1,6 +1,6 @@
 <?php
-include('libs/bootstrap.php');
-$userInfo = pauth();
+include('../libs/bootstrap.php');
+$doctorInfo = dauth();
 ?>
 
 <!DOCTYPE html>
@@ -12,24 +12,28 @@ $userInfo = pauth();
  <div align="center" style="width: 1024px; margin-left: auto; margin-right: auto;">
 		<div id="a">
 		 <input class="input"  readonly="readonly"  title="برای انتخاب تاریخ کلیک کنید" type="text"
-		 id="datepicker11"  style="width:90px; cursor: pointer; color: #f00; font-size: 16px;"	 value="انتخاب تاریخ"/ onchange="sdate(this.value)">
+		 id="datepicker11"  style="width:90px; cursor: pointer; color: #f00; font-size: 16px;"	 value="انتخاب تاریخ"/ onchange="showdate(this.value)">
 		 <label class="title"> : تاریخ های رزرو</label> 
 		</div>
- 		<div class="main">
+		<div id="b">
+		 <input class="input"  readonly="readonly"  title="برای انتخاب تاریخ کلیک کنید" type="text"
+		 id="datepicker11"  style="width:90px; cursor: pointer; color: #f00; font-size: 16px;"	 value="انتخاب تاریخ"/ onchange="showdate(this.value)">
+		 <label class="title"> : تاریخ های رزرو</label> 
+		</div>
+ 		<div class="doctor_main">
 		 <div class="right_panel">
-		 	<img alt="" src="images/cartable.png"><br>
+		 	<img alt="" src="../images/cartable2.png"><br>
 		 	<b class="title">امروز:<?php echo date::jdate('j F Y'); ?>  </b>
 		 	<hr>
 		 	<table>
 		 	<tr>
-		 	<td><b class="title"><?=$userInfo['name']?></b></td>
-		 	<td><img class="image" src="images/pic/<?=$userInfo['pic']?>" width="85px" height="113px;"></td>
+		 	<td><b class="title"><?=$doctorInfo['name']?></b></td>
+		 	<td><img class="image" src="../images/doctor/<?=$doctorInfo['img']?>" width="85px" height="113px;"></td>
 		 	</tr>
 		 	</table>
 		 	<br>
-		 	<div class="menu"  onclick="home()">اخبار و اطلاعیه ها</div>
-		 	<div class="menu"  onclick="reserve()">رزرو پزشک</div>
-		 	<div class="menu"  onclick="history()">تاریخچه وقت های رزرو شده</div>
+		 	<div class="menu"  onclick="dvisit_time()">مشاهده وقت های رزرو شده</div>
+		 	<div class="menu"  onclick="reserve()">تعریف روزهای فعال</div>
 		 	<div class="menu" onclick="profile()">ویرایش اطلاعات</div>
 		 	<a href="index.php?exit=true"><div class="menu" >خروج</div></a>
 		 </div>

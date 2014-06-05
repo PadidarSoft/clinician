@@ -38,38 +38,37 @@ function pauth(){
 	return $userInfo;
 }
 
-function createthumb($name,$filename,$new_w,$new_h){
-	$src_img=imagecreatefromjpeg($name);
-	$old_x=imageSX($src_img);
-	$old_y=imageSY($src_img);
-	
-	if ($old_x > $old_y) {
-		$thumb_w=$new_w;
-		$thumb_h=$old_y*($new_h/$old_x);
+function dauth(){
+	$database = new db("root", "", "localhost", "clinician", array(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES 'utf-8'"));
+	if(!isset($_SESSION['doctor_id'])){
+		header('Location: index.php?page=login');
+		exit();
 	}
-	if ($old_x < $old_y) {
-		$thumb_w=$old_x*($new_w/$old_y);
-		$thumb_h=$new_h;
+	$countuser = $database->getCountRow("SELECT * FROM doctor WHERE id =? ", array($_SESSION['doctor_id']));
+	if($countuser<1){
+		header('Location: index.php?page=login');
+		exit();
 	}
-	if ($old_x == $old_y) {
-		$thumb_w=$new_w;
-		$thumb_h=$new_h;
-	}
-	
-	$dst_img=ImageCreateTrueColor($thumb_w,$thumb_h);
-	imagecopyresampled($dst_img,$src_img,0,0,0,0,$thumb_w,$thumb_h,$old_x,$old_y);
-
-	imagejpeg($dst_img,$filename); 
-
-	imagedestroy($dst_img); 
-	imagedestroy($src_img); 
-//createthumb('ok.jpg','ok/ok-thumb.jpg',100,100);
-	};
-
+	$userInfo = $database->getRow("SELECT * FROM doctor WHERE id =?", array($_SESSION['doctor_id']));
+	return $userInfo;
+}
 
 function pateint_logout(){
 	unset($_SESSION['pateint_id']);
 	unset($_SESSION['pateint_error']);
 	return true;
 }
+
+function doctor_logout(){
+	unset($_SESSION['doctor_id']);
+	unset($_SESSION['doctor_error']);
+	return true;
+}
+
+function limitword($string, $limit){
+	$words = explode(" ",$string);
+	$output = implode(" ",array_splice($words,0,$limit));
+	return $output;
+}
+
 ?>

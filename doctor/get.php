@@ -1,6 +1,6 @@
 <?php
-include('libs/bootstrap.php');
-$userInfo = pauth();
+include('../libs/bootstrap.php');
+$userInfo = dauth();
 if(isset($_GET['q'])){
 $q=$_GET["q"];
 $_SESSION['specialty']=$_GET["q"];
@@ -48,8 +48,52 @@ $getrows = $database->getRows("SELECT * FROM `doctor` WHERE specialty_id =?", ar
 		</table>
 <?php
 }
-if(isset($_GET['s'])){
-$_SESSION['sdate']=$_GET['s'];
+		if(isset($_GET['s'])){
+		$_SESSION['showdate']=$_GET['s'];
+		$date=$_GET['s'];
+		$nfreetime = $database->getCountRow("SELECT * FROM `visit_time` WHERE `doctor_id` =? AND `date`=?
+		ORDER BY `time` ASC,`id` ASC ", array($userInfo['id'],$date));
+		if($nfreetime>=1){
+?>
+		<table dir="rtl" style="width: 650px; background-color: #ccc; border-radius:8px;">
+		<tr bgcolor="#ccc" height="35">
+		<th>تاریخ</th>
+		<th>ساعت<th>
+		<th>نام بیمار</th>
+		<th>بیمه</th>
+		<th>کد رهیگری</th>
+		</tr>
+		<?php
+		$getv = $database->getRows("SELECT * FROM `visit_time` WHERE `doctor_id` =? AND `date`=?
+		ORDER BY `time` ASC,`id` ASC ", array($userInfo['id'],$date));
+		foreach ($getv as $row) {
+		$getd=$database->getRow("SELECT * FROM `pateint` WHERE `id` =?", array($row['pateint_id']));
+		$geti=$database->getRow("SELECT * FROM `insurance` WHERE `id` =?", array($row['insurance_id']));
+		?>
+		<tr height="38"  class="nav" align="center" style="color: #666">
+		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['date']?></td>
+		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['time']?></td>
+		<td bgcolor="#ccc"></td>
+		<td><?=$getd['name']?></td>
+		<td><?=$geti['cname']?></td>
+		<td><?=$row['code']?></td>
+		</tr>
+		<?php } ?>
+		</table>
+		<?php 
+		}else{
+		?>
+		<div align="center">
+		<table style="width: 490px; background-color: #ccc; border-radius:8px;">
+		<tr>
+		<td>
+				<div class="error" align="center">در تاریخ <?=$date?> رزرو وقت صورت نگرفته است</div>
+		</td>
+		</tr>
+		</table>
+		</div>	
+		<?php
+		}
 }
 
 if(isset($_GET['delimg'])){
@@ -96,7 +140,7 @@ $news=$_GET['news'];
 }
 
 if(isset($_GET['k'])){
-	$date=$_SESSION['sdate'];
+	$date=$_SESSION['showdate'];
 	$specialty=$_SESSION['specialty'];
 	$k=$_GET['k'];
 	$_SESSION['time_reserve']=$k;
@@ -114,11 +158,11 @@ if(isset($_GET['k'])){
 if(isset($_GET['v'])){
 $v=$_GET['v'];
 $_SESSION['doctor_id']=$v;
-if(isset($_SESSION['sdate'])){
-$date=$_SESSION['sdate'];
+if(isset($_SESSION['showdate'])){
+$date=$_SESSION['showdate'];
 }else{
  $date=date::jdate('Y/m/j','','','','en');
-$_SESSION['sdate']= $date;
+$_SESSION['showdate']= $date;
 }
 $getd = $database->getRow("SELECT * FROM `doctor` WHERE id =?", array($v));
 
@@ -164,7 +208,7 @@ $getvisitrows = $database->getRow("SELECT * FROM `free_times` WHERE doctor_id =?
 		    <th class="title">رزرو وقت</th>
 		  </tr>
 		  <tr height="38"  class="nav">
-		    <td align="center" class="title" style="color: #777;"><?= $_SESSION['sdate'];?></td>
+		    <td align="center" class="title" style="color: #777;"><?= $_SESSION['showdate'];?></td>
 		    <td align="center" width="90">
 			<select class="input" name="insurance" style="width: 80px;font-size: 16px;height: 30px;" onchange="free(this.value)">
 			<option selected="selected"></option>

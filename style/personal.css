@@ -6,6 +6,12 @@
 	font-family:BYekan, Tahoma, Geneva, sans-serif;
 	font-size:14px;
 	margin-top: 30px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;	
 
 		}
 
@@ -54,12 +60,32 @@ a:active {
 	z-index: 1005;
 	
 }
+#b{
+	width:500px;
+	display: none;
+	position: absolute;
+	z-index: 1005;
+	
+}
 .main{
 	width: 1010px;
 	height: auto;
 	position:absolute;
 	margin-top:-10px;
 	background: #fff url(../images/background_res.jpg);
+	background-position: bottom left;
+	background-repeat: no-repeat;
+	box-shadow:0px 0px 4px 1px #999;
+	border-radius: 8px;
+	padding: 10px;
+	
+}
+.doctor_main{
+	width: 1010px;
+	height: auto;
+	position:absolute;
+	margin-top:-10px;
+	background: #fff url(../images/background_d_res.jpg);
 	background-position: bottom left;
 	background-repeat: no-repeat;
 	box-shadow:0px 0px 4px 1px #999;
@@ -117,6 +143,7 @@ a:active {
 	
 }
 
+
 .error {
 	font-family:BYekan, Tahoma, Geneva, sans-serif;
 	color: #F00;
@@ -137,18 +164,38 @@ a:active {
 	padding: 3px;
 	
 }
+.news{
+	width: 650px;
+	border-bottom:1px solid #ccc;
+	padding: 3px;
+	text-align: right;
+	float: right;
+	color: #888;
+	border-radius:3px;
+	font-size: 16px;
+	cursor: pointer;
+}
+.news:hover{
+	color: #555;
+}
 .menu{
-	height:30px;
-	line-height:32px;
+	height:25px;
+	line-height:27px;
 	background: #dadada;
 	padding: 5px;
 	margin-bottom:2px;
+	border-radius:5px;
 	cursor: pointer;
-	color: #444;
+	color: #888;
+	font-size:18px;
+	border-right: 5px solid #ccc;
+	border-left: 5px solid #ccc;
 }
 .menu:HOVER{
-	background: #b8b8b8;
+	background: #dedede;
 	color: #f00;
+	border-right: 5px solid #f00;
+	border-left: 5px solid #f00;
 }
 .input{
 		padding:2px;
