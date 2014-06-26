@@ -83,32 +83,6 @@ switch ($page) {
  	</table>
  	</form>
  	<?php
-<<<<<<< HEAD
- 	break;
- 	
- 	case 'profile':
-	echo "Profile";
- 	break;
- 	
- 	case 'reserve_submit':
- 		if(isset($_SESSION['sdate'])){
- 			 $date=$_SESSION['sdate'];
- 		}else{
- 			 $date=date::jdate('Y/m/j','','','','en');
- 		}
- 		if(isset($_SESSION['insurance_id'])){
- 			 $insurance=$_SESSION['insurance_id'];
- 		}else{
- 			 $insurance='2';
- 		}
- 		$specialty=$_SESSION['specialty'];
- 		$time=$_SESSION['time_reserve'];
- 		$doctor=$_SESSION['doctor_id'];
- 		$pateint=$userInfo['id'];
- 		$chkvisittime = $database->getCountRow("SELECT pateint_id FROM `visit_time` WHERE doctor_id =? and date=? ", array($doctor,$date));
-		if($chkvisittime>=1){
-		die("<div align='center' style='color:red;font-size:16px;'>امکان رزرو وقت برای هر پزشک در هر روز فقط یک بار می باشد</div> ");
-=======
 		break;
 
 	case 'profile':
@@ -299,7 +273,7 @@ switch ($page) {
 		if (isset($_SESSION['sdate'])) {
 			$date = $_SESSION['sdate'];
 		} else {
-			$date = date::jdate('Y/m/d', '', '', '', 'en');
+			$date = date::jdate('Y/m/j', '', '', '', 'en');
 		}
 		if (isset($_SESSION['insurance_id'])) {
 			$insurance = $_SESSION['insurance_id'];
@@ -320,7 +294,6 @@ switch ($page) {
 		$chkvisittime = $database->getCountRow("SELECT * FROM `visit_time` WHERE doctor_id =? and date=? and pateint_id=? ", array($doctor, $date,$pateint));
 		if ($chkvisittime >= 1) {
 			die("<div align='center' style='color:red;font-size:16px;'>امکان رزرو وقت برای هر پزشک در هر روز فقط یک بار می باشد</div> ");
->>>>>>> a8ed6794923d67d9565beb9b1d7f485cc44fb5fd
 		}
 		$chkvisittime2 = $database->getCountRow("SELECT pateint_id FROM `visit_time` WHERE time =? and date=?", array($time, $date));
 		if ($chkvisittime2 >= 1) {

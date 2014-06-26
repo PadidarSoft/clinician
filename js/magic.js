@@ -55,11 +55,21 @@ function getFormValues(formobj)
     {
         switch(formobj.elements[i].type)
         {
+        	case "text":
+            str += formobj.elements[i].name +
+            "=" + encodeURI(formobj.elements[i].value) + "&";
+            break;
+            
             case "select-one":
             str += formobj.elements[i].name +
             "=" + formobj.elements[i].options[formobj.elements[i].selectedIndex].value + "&";
             break;
-            }
+            
+            case "textarea":
+            str += formobj.elements[i].name +
+            "=" + encodeURI(formobj.elements[i].value) + "&";
+            break;
+            }  
         }
 str = str.substr(0,(str.length - 1));
 return str;

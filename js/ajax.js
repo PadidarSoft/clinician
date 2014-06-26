@@ -16,6 +16,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
     }
   }
+$('#draggable').hide();  
 xmlhttp.open("GET","ajax.php?page=reserve",true);
 xmlhttp.send();
 }
@@ -40,6 +41,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
     }
   }
+$('#draggable').hide();  
 xmlhttp.open("GET","ajax.php?page=visit_time",true);
 xmlhttp.send();
 }
@@ -63,6 +65,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
     }
   }
+$('#draggable').hide(); 
 xmlhttp.open("GET","ajax.php?page=home",true);
 xmlhttp.send();
 }
@@ -107,6 +110,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
     }
   }
+$('#draggable').hide();  
 xmlhttp.open("GET","ajax.php?page=profile",true);
 xmlhttp.send();
 }
@@ -129,6 +133,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
     }
   }
+$('#draggable').hide();  
 xmlhttp.open("GET","ajax.php?page=reserve_submit",true);
 xmlhttp.send();
 }
@@ -369,6 +374,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
     }
   }
+$('#draggable').hide(); 
 xmlhttp.open("GET","get.php?s="+str,true);
 xmlhttp.send();
 }
@@ -395,6 +401,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("visit_time").innerHTML=xmlhttp.responseText;
     }
   }
+$('#draggable').hide();  
 xmlhttp.open("GET","get.php?s="+str,true);
 xmlhttp.send();
 }
@@ -422,6 +429,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("gdate").innerHTML=xmlhttp.responseText;
     }
   }
+$('#draggable').hide();  
 xmlhttp.open("GET","get.php?gd="+str,true);
 xmlhttp.send();
 }
@@ -476,5 +484,40 @@ xmlhttp.onreadystatechange=function()
     }
   }
 xmlhttp.open("GET","get.php?k="+str,true);
+xmlhttp.send();
+}
+
+function showpanel(str)
+{
+if (str=="")
+  {
+  $('#draggable').fadeIn("fast");
+  $('#close').show();  
+$('#removepanel').hide();
+$('#editpanel').hide();
+$('#editpanel2').hide();
+  document.getElementById("bodypanel").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+  $('#draggable').fadeIn("fast");
+  $('#close').show();
+  $('#removepanel').hide();
+  $('#editpanel').hide();  
+    document.getElementById("bodypanel").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?panel="+str,true);
 xmlhttp.send();
 }

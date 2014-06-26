@@ -70,11 +70,11 @@ $getrows = $database->getRows("SELECT * FROM `doctor` WHERE specialty_id =?", ar
 		$getd=$database->getRow("SELECT * FROM `pateint` WHERE `id` =?", array($row['pateint_id']));
 		$geti=$database->getRow("SELECT * FROM `insurance` WHERE `id` =?", array($row['insurance_id']));
 		?>
-		<tr height="38"  class="nav" align="center" style="color: #666">
+		<tr height="38"  class="nav" style="cursor:default" align="center" style="color: #666">
 		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['date']?></td>
 		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['time']?></td>
 		<td bgcolor="#ccc"></td>
-		<td><?=$getd['name']?></td>
+		<td><a href="#view/pateint/profile" rel="<?=$getd['id']?>" onclick="showpanel(this.rel)"><?=$getd['name']?></a></td>
 		<td><?=$geti['cname']?></td>
 		<td><?=$row['code']?></td>
 		</tr>
@@ -128,9 +128,23 @@ if(isset($_GET['sub'])and $_GET['sub']!==""){
 	?>
 	
 	<input type="button" name="Send" value="ثبت اطلاعات" class="btn2" style="width: 123px;" 
-	onclick="formget(this.form, 'send.php');" />
+	onclick="formget(this.form, 'send.php?item=submit_time');" />
 	
 	<?php
+}
+if(isset($_GET['panel'])){
+	$id=$_GET["panel"];
+	$getpateint = $database->getRow("SELECT * FROM `pateint` WHERE id =?", array($id));
+	?>
+	<img class="image" style="margin-left:-120px;" width="85px" height="113px;" src="../images/pic/<?=$getpateint['pic'];?>" />	
+	
+	<div class="text" style="font-size:18px;">
+	نام و نام خانوادگی : <b dir="rtl" class="error" style="font-size:19px;"><?=$getpateint['name'];?></b><br>
+	کد ملی : <b class="error" style="font-size:19px;"><?=$getpateint['melicode'];?></b><br>
+	سن : <b class="error" style="font-size:19px;"><?=$getpateint['age'];?> سال</b><br>
+	تلفن تماس : <b class="error" style="font-size:19px;"><?=$getpateint['mobile'];?></b><br>
+	</div>
+	<?php 		
 }
 
 if(isset($_GET['em'])){
@@ -193,6 +207,9 @@ if(isset($_GET['mt'])){
 
 if(isset($_GET['gd'])){
 	$date=$_GET['gd'];
+	$doctor_id=$userInfo['id'];
+	$getfree = $database->getCountRow("SELECT * FROM `free_times` WHERE date =? and doctor_id=?", array($date,$doctor_id));
+	if($getfree<1){
 	?>
 		<div id="showresult">
 	<form action="#">
@@ -200,7 +217,9 @@ if(isset($_GET['gd'])){
 		<table dir="rtl">
 			<tr>
 				<td align="left">تاریخ:</td>
-				<td align="right" class="title" style="font-size: 17px;color: #f00;"><?=$date?></td>
+				<td align="right" class="title" style="font-size: 17px;color: #f00;">
+					<input class="input" type="text" style="width:135px;" name="date" readonly="readonly" value="<?=$date?>" />
+					</td>
 			</tr>
 			<tr>
 				<td align="left">زمان شروع:</td>
@@ -258,15 +277,18 @@ if(isset($_GET['gd'])){
 	</form>
 	</div>
 	<?php
+}else{
+	echo "<div align='center' class='error' style='font-size:18px;'>در تاریخ $date زمان های خالی ثبت گردیده است</div>";
+}
 }
 
 if(isset($_GET['delimg'])){
-	$database->updateRow("UPDATE `pateint` SET `pic`=? WHERE id=?", array('none.png',$userInfo['id']));
+	$database->updateRow("UPDATE `doctor` SET `img`=? WHERE id=?", array('none.png',$userInfo['id']));
 ?>
 <div align="center" style="width:77px;height:30px;line-height:30px; position: absolute; margin-right: 0px;z-index: 1001; background-color: #999; opacity:0.5;color:#fff;">
 بدون تصویر
 </div>
-<img src="images/pic/none.png" width="75" height="90" style="position: relative; border: 1px solid #ccc;">
+<img src="../images/doctor/none.png" width="75" height="90" style="position: relative; border: 1px solid #ccc;">
 <?php 
 }
 

@@ -32,6 +32,7 @@
 	            minDate: '0d',
 	            maxDate: '+6d'
 	        });
+
 	    });
 </script>
 </head>

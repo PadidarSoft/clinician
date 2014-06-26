@@ -52,11 +52,11 @@ switch ($page) {
 		$getd=$database->getRow("SELECT * FROM `pateint` WHERE `id` =?", array($row['pateint_id']));
 		$geti=$database->getRow("SELECT * FROM `insurance` WHERE `id` =?", array($row['insurance_id']));
 		?>
-		<tr height="38"  class="nav" align="center" style="color: #666">
+		<tr height="38"  class="nav" style="cursor:default" align="center" style="color: #666">
 		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['date']?></td>
 		<td bgcolor="#efefef" style="color: #777; font-size: 16px;"><?=$row['time']?></td>
 		<td bgcolor="#ccc"></td>
-		<td><?=$getd['name']?></td>
+		<td><a title="مشاهده پروفایل بیمار" href="#view/pateint/profile" rel="<?=$getd['id']?>" onclick="showpanel(this.rel)"><?=$getd['name']?></a></td>
 		<td><?=$geti['cname']?></td>
 		<td><?=$row['code']?></td>
 		</tr>
@@ -91,7 +91,7 @@ switch ($page) {
  	<b  class="title" style="font-size: 25px; color: #f00;">تعریف روزهای فعال</b><br><hr>
  	<div id="gdate" align="right">
  	<form action="">
- 	d
+ 	<div align='center' class='error' style='font-size:18px;'>تاریخ انتخاب نمایید</div>
  	</form>
  	</div>
  	<?php
@@ -102,7 +102,7 @@ switch ($page) {
 		<b class="title" style="font-size: 25px; color: #f00;">ویرایش اطلاعات</b>
 		<hr>
 	<?php
-	$getuser = $database->getRow("SELECT * FROM pateint WHERE id =?", array($userInfo['id']));
+	$getuser = $database->getRow("SELECT * FROM doctor WHERE id =?", array($userInfo['id']));
 
 	?>
 				<div style="margin-top: -10px;margin-right: -22px;">
@@ -160,12 +160,7 @@ switch ($page) {
 	?>
 						</select>
 						</td>
-						<td align="left" ><label class="text">* سن</label></td>
-						<td align="right" >
-						<input id="age" name="age"  class="input" type="text" style="width: 40px;"
-						 maxlength="3" onKeyUp="numericFilter(this);" onblur="CheckEmpty();" value="<?=$getuser['age'];?>">
-						<div id="a" class="error" ></div>
-						</td>
+
 					</tr>
 					</table>
 					</td>
@@ -180,7 +175,7 @@ switch ($page) {
                        <div align="center" style="width:77px;height:30px;line-height:30px; position: absolute; margin-right: 0px;z-index: 1001; background-color: #999; opacity:0.5;color:#fff;">
 
                       <?php
-	$getpic = $getuser['pic'];
+	$getpic = $getuser['img'];
 	if ($getpic == "none.png") {
 		print "<div align='center'>بدون تصویر</div>";
 	} else {
@@ -190,23 +185,14 @@ switch ($page) {
 
 	?>
                       </div>
-                      <img src="images/pic/<?=$getuser['pic']?>" width="75" height="90" style="position: relative; border: 1px solid #ccc;"></div>
+                      <img src="../images/doctor/<?=$getuser['img']?>" width="75" height="90" style="position: relative; border: 1px solid #ccc;"></div>
                       </div>
                       <div class="error">فرمت قابل قبول:jpg</div>
                       </td>
-                      <td align="left" ><label class="text">* نوع بیمه</label></td>
+                      <td align="left" ><label class="text">* مدرک تحصیلی</label></td>
                       <td>
-                      <select id="insurance" name="insurance"  class="input" style="height: 34px; width: 180px;">
-                      <?php $getinsurance = $database->getRow("SELECT * FROM insurance WHERE id =?", array($getuser['insurance_id'])); ?>
-                      <option style="background-color: #ccc; color: #f00;" selected="selected"  value="<?=$getuser['insurance_id']?>"><?=$getinsurance['cname'] ?> (انتخاب شده)</option>
-                      <?php
-						    $getrows = $database->getRows("SELECT * FROM insurance");
-							foreach ($getrows as $row) { ?>
-					  		<option value="<?=$row['id']?>"><?=$row['cname'] ?></option>
-					  <?php
-							}
-							?>
-					  </select>
+                      <input id="email"  name="education"  class="input" type="text"
+					  value="<?=$getuser['education']?>">
                       </td>
                  </tr>
 

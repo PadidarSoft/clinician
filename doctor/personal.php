@@ -8,6 +8,12 @@ $doctorInfo = dauth();
 <?php
  include("header.php");
 ?>
+<div style="width:30px; height:400px; margin-left:350px;margin-top:70px; position:absolute;">
+	<div id="draggable">
+	<div id="close"><img src="../images/close.png" /></div><br>
+	<div align="right" id="bodypanel" style="cursor:move;"></div>
+</div>
+</div>
  <body>
  <div align="center" style="width: 1024px; margin-left: auto; margin-right: auto;">
 		<div id="a">
@@ -64,13 +70,12 @@ $doctorInfo = dauth();
 	  }
 		if (isset($_POST['edit'])) {
 		if (!empty($_POST['name']) && !empty($_POST['melicode']) &&
-		 !empty($_POST['age']) && !empty($_POST['insurance']) &&
 		 !empty($_POST['mobile'])){
 			$name = $_POST['name'];
 			if (empty($_POST['password']) && empty($_POST['oldpassword'])) {
-				$password = $userInfo['password'];
+				$password = $doctorInfo['password'];
 			} else {
-				$oldpass=$userInfo['password'];
+				$oldpass=$doctorInfo['password'];
 				if (__md5($_POST['oldpassword'])!==$oldpass){
 					die ("<SCRIPT LANGUAGE='JavaScript'>
 	    					window.alert('کلمه عبور قبلی شما صحیح نمی باشد')
@@ -82,9 +87,8 @@ $doctorInfo = dauth();
 
 			$melicode = $_POST['melicode'];
 			$gender = $_POST['gender'];
-			$age = $_POST['age'];
 			$mobile = $_POST['mobile'];
-			$insurance = $_POST['insurance'];
+			$education = $_POST['education'];
 			if (!empty($_POST['email'])) {
 				if (filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL)) {
 					$email = $_POST['email'];
@@ -100,7 +104,7 @@ $doctorInfo = dauth();
 			$address = strip_tags($_POST['address']);
 			$allowed_filetypes = array('.jpg', '.gif', '.bmp', '.png');
 			$max_filesize = 524288;
-			$upload_path = 'images/pic/';
+			$upload_path = '../images/doctor/';
 			$filename = $_FILES['img']['name'];
 			if (!empty($filename)) {
 				$ext = substr($filename, strpos($filename, '.'), strlen($filename) - 1);
@@ -122,20 +126,20 @@ $doctorInfo = dauth();
 				move_uploaded_file($_FILES['img']['tmp_name'], $upload_path . $tname);
 				$sname = $random . $filename;
 			} else {
-				$userpic=$userInfo['pic'];
+				$userpic=$doctorInfo['img'];
 				if($userpic=='none.png'){
 					$sname = 'none.png';
 				}else{
-					$sname=$userInfo['pic'];
+					$sname=$doctorInfo['img'];
 				}
 			}
 
-				$updateuser = $database->updateRow("UPDATE  `pateint`
-				 SET `name`=?,`password`=?,`insurance_id`=?,
-				`melicode`=?,`gender`=?,	`age`=?,`pic`=?,
+				$updateuser = $database->updateRow("UPDATE  `doctor`
+				 SET `name`=?,`password`=?,`education`=?,
+				`melicode`=?,`gender`=?,`img`=?,
 				`email`=?,`mobile`=?,`address`=? WHERE `id`=?"
-				 , array($name,	$password, $insurance,$melicode,
-				  $gender, $age, $sname, $email, $mobile, $address,$userInfo['id']));
+				 , array($name,	$password, $education,$melicode,
+				  $gender, $sname, $email, $mobile, $address,$doctorInfo['id']));
 				  print("<div align='center' class='box-message'>
 				  بروزرسانی با موفقیت انجام گرفت</div> ");
 		} else {
