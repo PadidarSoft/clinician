@@ -428,7 +428,9 @@ if(isset($_GET['editpanel'])){
 			break;	
 							
 		case 'feevisit':
-			$getinsurance = $database->getRow("SELECT * FROM `insurance` WHERE id =?", array($id));
+			$getspec_ins = $database->getRow("SELECT * FROM `spec_ins` WHERE id =?", array($id));
+			$getspecialty = $database->getRow("SELECT * FROM `specialty` WHERE id =?", array($getspec_ins['specialty_id']));
+			$getinsurance = $database->getRow("SELECT * FROM `insurance` WHERE id =?", array($getspec_ins['insurance_id']));
 		?>	
 		<div id="showresult" dir="rtl" class="text" style="font-size:18px; margin-top:50px;margin-right:50px;">
 			<span id="error" style="color: Red; font-size:13px; 
@@ -438,36 +440,43 @@ if(isset($_GET['editpanel'])){
 			<table>
 			<tr>
 			<td align="left">
-				نام شرکت:
+				تخصص:
 			</td>
 			<td>
-				<input type="text" style="display:none;" value="<?=$getinsurance['id']?>" name="id"/>										
-				<input type="text" class="input" name="cname" value="<?=$getinsurance['cname']?>" style="width:130px;height:30px;"/>
+			<input type="text" style="display:none;" value="<?=$getdoctor['id']?>" name="id"/>										
+			<select dir="rtl" name="specialty_id" class="input" style="width:185px;height:30px;">
+			<option selected="selected" value="<?=$getspecialty['id']?>"><?=$getspecialty['title']?>(انتخاب شده)</option>
+			</select>
 			</td>
 			</tr>
 			<tr>
 			<td align="left">
-				نوع:
+				بیمه:
 			</td>
 			<td>
-				<input type="text" class="input" value="<?=$getinsurance['type']?>" name="type" style="width:130px;height:30px;"/>
+			<div id="ins_type">
+				<select dir="rtl" name="insurance_id" class="input" style="width:185px;height:30px;">	
+					<option selected="selected" value="<?=$getinsurance['id']?>"><?=$getinsurance['cname']?>(انتخاب شده)</option>
+				
+				</select>	
+			</div>
+
 			</td>
 			</tr>
 			<tr>
 			<td align="left">
-				توضیحات:
+				مبلغ:
 			</td>
 			<td>
-				<textarea name="des" class="input"  style="width: 170px; height: 70px;resize: none;"
-				onkeypress="return imposeMaxLength(this, 150);"  onblur="CheckEmpty();">
-				<?=$getinsurance['des']?>
-				</textarea>
+				<div id="fee">
+				<input type="text" onkeypress="return IsNumeric(event);" class="input" name="fee" value="<?=$getspec_ins['fee']?>" style="width: 120px;height:30px;"/> تومان					
+				</div>
 			</td>
-			</tr>
+			</tr>			
 			<tr>
 			<td></td>
 			<td>
-			<input type="button" onclick="formget(this.form,'send.php?item=editinsurance')"
+			<input type="button" onclick="formget(this.form,'send.php?item=editfeevisit')"
 			class="btn2" name="edit" value="ثبت اطلاعات" style="width:95px;" />
 			</td>
 			</tr>
@@ -718,7 +727,8 @@ case 'doctorname':
 				}
 		?>
 		<?php		
-		break;	
+		break;
+		
 
 }
 
@@ -740,4 +750,5 @@ if(isset($_GET['getins'])){
 	</select>	
 	<?php
 }
+
 ?>

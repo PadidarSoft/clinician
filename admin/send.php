@@ -293,6 +293,7 @@ switch ($item) {
 	
 	case 'editfeevisit':
 	if(!empty($_POST['fee']) && isset($_POST['insurance_id']) ){
+	$id=$_POST['id'];	
 	$fee=$_POST['fee'];
 	$specialty_id= $_POST['specialty_id'];
 	$insurance_id= $_POST['insurance_id'];

@@ -288,25 +288,6 @@ switch ($page) {
  			افزودن نرخ <img  src="../images/icon/add.png" style="vertical-align:middle; margin-right:-5px;" />
  			</div>
  	<br><hr>
- 	<div align="right" style="display: inline-block; width: 600px;">
-
- 	<form action="">
- 	<table dir="rtl" class="text" style="width: 650px; float: right;">
- 		<tr>
- 			<div class="text" style="font-size: 18px; margin-right: 80px;">:جستجو نرخ</div>
- 		</tr>
- 	<tr>
- 		<td align="right">بر اساس تخصص:
- 		<input type="text" name="specialty" class="input" placeholder="تخصص" style="width: 200px;" onkeyup="search('specialtyname',this.value)">
- 		</td>
- 	</tr>
- 	 	<tr>
- 		<td align="right" style="word-spacing:5px;">بر اساس  بیمه:
- 		<input type="text" name="insurance" class="input" placeholder="نام شرکت بیمه"  style="width: 200px;" onkeyup="search('insurancename',this.value)">
- 		</td>
- 	</tr>
- 	</table>
- 	</div>
  	<p></p> 	
  	<div align="right" style="display: inline-block; width: 600px;">
 
