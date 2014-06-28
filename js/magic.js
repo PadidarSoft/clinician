@@ -60,6 +60,11 @@ function getFormValues(formobj)
             "=" + encodeURI(formobj.elements[i].value) + "&";
             break;
             
+        	case "password":
+            str += formobj.elements[i].name +
+            "=" + encodeURI(formobj.elements[i].value) + "&";
+            break; 
+                       
             case "select-one":
             str += formobj.elements[i].name +
             "=" + formobj.elements[i].options[formobj.elements[i].selectedIndex].value + "&";

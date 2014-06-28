@@ -1,6 +1,6 @@
 <?php
 include('../libs/bootstrap.php');
-$doctorInfo = dauth();
+$doctorInfo = auth();
 ?>
 
 <!DOCTYPE html>
@@ -8,12 +8,22 @@ $doctorInfo = dauth();
 <?php
  include("header.php");
 ?>
-<div style="width:30px; height:400px; margin-left:350px;margin-top:70px; position:absolute;">
-	<div id="draggable">
-	<div id="close"><img src="../images/close.png" /></div><br>
-	<div align="right" id="bodypanel" style="cursor:move;"></div>
-</div>
-</div>
+ 			  	<div style="width:30px; height:400px; margin-left:350px;margin-top:70px; position:absolute;">
+		  		<div id="draggable">
+		  			<div class="close" id="close"><img src="../images/close.png" /></div><br>
+		  			<div align="right" id="bodypanel" style="cursor:move;"></div>
+		  		</div>
+		  		
+		  		<div id="removepanel">
+		  			<div class="close" id="close2"><img src="../images/close.png" /></div><br>
+		  			<div align="right" id="bodyremove" style="cursor:move;"></div>
+		  		</div>
+		  		
+		  		<div id="editpanel">
+		  			<div class="close" id="close3"><img src="../images/close.png" /></div><br>
+		  			<div align="right" id="bodyedit" style="cursor:move;"></div>
+		  		</div>	  		
+		 		</div>
  <body>
  <div align="center" style="width: 1024px; margin-left: auto; margin-right: auto;">
 		<div id="a">
@@ -28,23 +38,25 @@ $doctorInfo = dauth();
 		</div>
  		<div class="doctor_main">
 		 <div class="right_panel">
-		 	<img alt="" src="../images/cartable2.png"><br>
+		 	<img alt="" src="../images/cartable3.png"><br>
 		 	<b class="title">امروز:<?php echo date::jdate('j F Y'); ?>  </b>
 		 	<hr>
 		 	<table>
 		 	<tr>
 		 	<td><b class="title"><?=$doctorInfo['name']?></b></td>
-		 	<td><img class="image" src="../images/doctor/<?=$doctorInfo['img']?>" width="85px" height="113px;"></td>
 		 	</tr>
 		 	</table>
 		 	<br>
-		 	<div class="menu"  onclick="dvisit_time()">مشاهده وقت های رزرو شده</div>
-		 	<div class="menu"  onclick="reserve()">تعریف روزهای فعال</div>
-		 	<div class="menu" onclick="profile()">ویرایش اطلاعات</div>
+		 	<div class="menu"  onclick="specialty()">تعریف تخصص</div>		 	
+		 	<div class="menu"  onclick="doctor()">تعریف پزشک</div>
+		 	<div class="menu" onclick="insurance()">تعریف بیمه</div>
+		 	<div class="menu" onclick="feevisit()">تعریف نرخ ویزیت</div>
+		 	<div class="menu" onclick="addnews()">ثبت خبر</div>	
+		 	<div class="menu" onclick="profile()">ویرایش اطلاعات</div>	 			 	
 		 	<a href="index.php?exit=true"><div class="menu" >خروج</div></a>
 		 </div>
 		  <div id="main_panel"  class="main_panel">
-			<img src="../images/home.png" />	
+		  <img src="../images/home.png" />	
 		<?php
 		if (isset($_POST['edit'])) {
 		if (!empty($_POST['name']) && !empty($_POST['melicode']) &&

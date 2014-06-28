@@ -144,20 +144,20 @@ switch ($page) {
 						<td>
 						<select id="gender"  name="gender" class="input" style="height: 34px;" >
 						<?php
-	    $gender = $getuser['gender'];
-	if ($gender == 'male') {
-		print("
-		<option selected='selected' value='male'>مرد</option>
-		<option value='female'>زن</option>
-		");
-	} else {
-		print("
-		<option selected='selected' value='female'>زن</option>
-		<option value='male'>مرد</option>
-		");
-	}
-
-	?>
+					    $gender = $getuser['gender'];
+					if ($gender == 'male') {
+						print("
+						<option selected='selected' value='male'>مرد</option>
+						<option value='female'>زن</option>
+						");
+					} else {
+						print("
+						<option selected='selected' value='female'>زن</option>
+						<option value='male'>مرد</option>
+						");
+					}
+				
+					?>
 						</select>
 						</td>
 

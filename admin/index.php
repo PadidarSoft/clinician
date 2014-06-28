@@ -1,7 +1,7 @@
 <?php
 include '../libs/bootstrap.php';
 if(isset($_GET['exit'])){
-	doctor_logout();
+	admin_logout();
 }
 if(!isset($_GET['page'])){
 	header("location:index.php?page=login");
@@ -17,7 +17,7 @@ function trim_value(&$value)
 {
 	$value = trim($value);
 }
-if(isset($_SESSION['doctor_id'])){
+if(isset($_SESSION['login_id'])){
 	header('Location: personal.php?page=home');
 	exit();
 }
@@ -37,7 +37,7 @@ switch ($page) {
 	case 'login':
 ?>
 		<div style="width: 630px; display: block;    margin-left: auto;    margin-right: auto; margin-top: 100px;">
-			<div id="main_doctor_login" class="main_doctor_login">
+			<div id="main_doctor_login" class="main_admin_login">
 				<div style="margin-top: 20px;margin-right: 10px;">
 					<form action='login.php' method='post'>
 						<div align='right' class='l-box'>
@@ -70,10 +70,10 @@ switch ($page) {
 						   			<td align="right">
 						   			<div style='color:#F00; '>
 						   			<?php
-						   			if(isset($_SESSION['doctor_error'])){
-						   			 	echo $_SESSION['doctor_error'];
+						   			if(isset($_SESSION['login_error'])){
+						   			 	echo $_SESSION['login_error'];
 						   			}else{
-										$_SESSION['doctor_error']="";
+										$_SESSION['login_error']="";
 									}
 						   			 ?></div></td>
 					   			</tr>
@@ -88,7 +88,6 @@ switch ($page) {
 		</div>		
 	<?php	
 	break;
-
 	
 	default:
 	?>	

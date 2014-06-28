@@ -11,12 +11,12 @@ function __md5($str,$random = false){
 function auth(){
 	$database = new db("root", "", "localhost", "clinician", array(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES 'utf-8'"));
 	if(!isset($_SESSION['login_id'])){
-		header('Location: ../sitem/index.php');
+		header('Location: ../admin/index.php');
 		exit();
 	}
 	$info = $database->getCountRow("SELECT * FROM manager WHERE id=?",array($_SESSION['login_id']));
 	if($info < 1){
-		header('Location: ../sitem/index.php');
+		header('Location: ../admin/index.php');
 		exit();
 	}
 	$userInfo = $database->getRow("SELECT * FROM manager WHERE id=?",array($_SESSION['login_id']));
@@ -51,6 +51,12 @@ function dauth(){
 	}
 	$userInfo = $database->getRow("SELECT * FROM doctor WHERE id =?", array($_SESSION['doctor_id']));
 	return $userInfo;
+}
+
+function admin_logout(){
+	unset($_SESSION['login_id']);
+	unset($_SESSION['loginerror']);
+	return true;
 }
 
 function pateint_logout(){

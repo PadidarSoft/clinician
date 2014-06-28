@@ -1,3 +1,12 @@
+var specialKeys = new Array();
+specialKeys.push(8); //Backspace
+function IsNumeric(e) {
+var keyCode = e.which ? e.which : e.keyCode
+var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+document.getElementById("error").style.display = ret ? "none" : "inline";
+return ret;
+}
+
 function reserve()
 {
 var xmlhttp;
@@ -16,7 +25,10 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
     }
   }
-$('#draggable').hide();  
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removpanel').hide(); 
 xmlhttp.open("GET","ajax.php?page=reserve",true);
 xmlhttp.send();
 }
@@ -41,7 +53,10 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
     }
   }
-$('#draggable').hide();  
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removpanel').hide();
 xmlhttp.open("GET","ajax.php?page=visit_time",true);
 xmlhttp.send();
 }
@@ -66,6 +81,9 @@ xmlhttp.onreadystatechange=function()
     }
   }
 $('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removpanel').hide();
 xmlhttp.open("GET","ajax.php?page=home",true);
 xmlhttp.send();
 }
@@ -110,7 +128,10 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
     }
   }
-$('#draggable').hide();  
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removpanel').hide();
 xmlhttp.open("GET","ajax.php?page=profile",true);
 xmlhttp.send();
 }
@@ -133,7 +154,10 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
     }
   }
-$('#draggable').hide();  
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removpanel').hide();
 xmlhttp.open("GET","ajax.php?page=reserve_submit",true);
 xmlhttp.send();
 }
@@ -164,7 +188,31 @@ xmlhttp.open("GET","get.php?q="+str,true);
 xmlhttp.send();
 }
 
-
+function ins_type(str)
+{
+if (str=="")
+  {
+  document.getElementById("ins_type").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("ins_type").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?getins="+str,true);
+xmlhttp.send();
+}
 
 
 
@@ -375,6 +423,9 @@ xmlhttp.onreadystatechange=function()
     }
   }
 $('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removpanel').hide();
 xmlhttp.open("GET","get.php?s="+str,true);
 xmlhttp.send();
 }
@@ -401,7 +452,10 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("visit_time").innerHTML=xmlhttp.responseText;
     }
   }
-$('#draggable').hide();  
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removpanel').hide();
 xmlhttp.open("GET","get.php?s="+str,true);
 xmlhttp.send();
 }
@@ -429,7 +483,10 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("gdate").innerHTML=xmlhttp.responseText;
     }
   }
-$('#draggable').hide();  
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removpanel').hide();
 xmlhttp.open("GET","get.php?gd="+str,true);
 xmlhttp.send();
 }
@@ -495,7 +552,6 @@ if (str=="")
   $('#close').show();  
 $('#removepanel').hide();
 $('#editpanel').hide();
-$('#editpanel2').hide();
   document.getElementById("bodypanel").innerHTML="";
   return;
   } 
@@ -519,5 +575,307 @@ xmlhttp.onreadystatechange=function()
     }
   }
 xmlhttp.open("GET","get.php?panel="+str,true);
+xmlhttp.send();
+}
+
+///// admin
+
+function doctor()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
+    }
+  }
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removepanel').hide();  
+xmlhttp.open("GET","ajax.php?page=doctor",true);
+xmlhttp.send();
+}
+
+function insurance()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
+    }
+  }
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removepanel').hide();  
+xmlhttp.open("GET","ajax.php?page=insurance",true);
+xmlhttp.send();
+}
+
+function specialty()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
+    }
+  }
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removepanel').hide();  
+xmlhttp.open("GET","ajax.php?page=specialty",true);
+xmlhttp.send();
+}
+
+function feevisit()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
+    }
+  }
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removepanel').hide();  
+xmlhttp.open("GET","ajax.php?page=feevisit",true);
+xmlhttp.send();
+}
+
+function addnews()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("main_panel").innerHTML=xmlhttp.responseText;
+    }
+  }
+$('#draggable').hide(); 
+$('#addpnel').hide(); 
+$('#editpanel').hide(); 
+$('#removepanel').hide();  
+xmlhttp.open("GET","ajax.php?page=addnews",true);
+xmlhttp.send();
+}
+
+function addpanel(str)
+{
+if (str=="")
+  {
+  $('#draggable').fadeIn("fast");
+  $('#close').show();  
+$('#removepanel').hide();
+$('#editpanel').hide();
+  document.getElementById("bodypanel").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+  $('#draggable').fadeIn("fast");
+  $('#close').show();
+  $('#removepanel').hide();
+  $('#editpanel').hide();  
+    document.getElementById("bodypanel").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?addpanel="+str,true);
+xmlhttp.send();
+}
+
+
+function removepanel(str,id)
+{
+if (str=="")
+  {
+  $('#removepanel').show();  
+  $('#close2').show();
+  $('#draggable').hide();
+  $('#editpanel').hide();  
+  document.getElementById("bodyremove").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+  $('#removepanel').show();  
+  $('#close2').show();
+  $('#draggable').hide();
+  $('#editpanel').hide();  
+    document.getElementById("bodyremove").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?deletepanel="+str+"&id="+id,true);
+xmlhttp.send();
+}
+
+function deletitem(str,id)
+{
+if (str=="")
+  {
+  $('#removepanel').show();  
+  $('#close2').show();
+  $('#draggable').hide();
+  $('#editpanel').hide();  
+  document.getElementById("bodyremove").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+  $('#removepanel').show();  
+  $('#close2').show();
+  $('#draggable').hide();
+  $('#editpanel').hide();
+    document.getElementById("bodyremove").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","get.php?deleteitem="+str+"&id="+id,true);
+xmlhttp.send();
+}
+
+
+function editpanel(str,id)
+{
+if (str=="")
+  {
+  $('#editpanel').show();  
+  $('#close3').show();
+  $('#draggable').hide();
+  $('#editpanel').hide();
+  $('#removepanel').hide();    
+  document.getElementById("bodyedit").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+  $('#editpanel').show();  
+  $('#close3').show();  
+    document.getElementById("bodyedit").innerHTML=xmlhttp.responseText;
+    }
+  }
+  $('#editpanel').show();  
+  $('#close3').show();
+  $('#draggable').hide();
+  $('#editpanel').hide(); 
+xmlhttp.open("GET","get.php?editpanel="+str+"&id="+id,true);
+xmlhttp.send();
+}
+
+function search(str,value)
+{
+if (str=="")
+  {
+  document.getElementById("txtHint").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+    }
+  }
+$('#draggable').hide();
+$('#removepanel').hide();
+$('#editpanel').hide(); 
+xmlhttp.open("GET","get.php?search="+str+"&value="+value,true);
 xmlhttp.send();
 }
