@@ -300,7 +300,7 @@ switch ($item) {
 		$updatspecialty= $database->updateRow("UPDATE `spec_ins` SET `fee`=?,`specialty_id`=?,`insurance_id`=? WHERE `id`=?",
 		array($fee,$specialty_id,$insurance_id,$id));
 		print("
-			<div id='aaa' align='center'>
+			<div id='aaa' align='center' style='margin-left:65px;margin-top:-50px;'>
 				<table>
 				<tr>
 				<td align='center'><img src='../images/edit-confrim.png'></td>
@@ -325,7 +325,78 @@ switch ($item) {
 	 			</div>");
 	}
 	
-	break;		
-			
+	break;
+	
+	case 'addnews':
+	if(!empty($_POST['title']) && !empty($_POST['body']) ){
+	$title=$_POST['title'];
+	$public= $_POST['public'];
+	$body= strip_tags($_POST['body']);
+	$date=date::jdate('Y/m/d','','','','en');
+	$image='none.png';
+	$insertrow = $database->insertRow("INSERT INTO news (title,public,body,date,image)
+		 		 VALUES (?,?,?,?,?)" , array($title,$public,$body,$date,$image));		 
+		print("
+			<div id='aaa' align='center' style='margin-left:20px;margin-top:-20px;'>
+				<table>
+					<tr>
+					<td align='center'><img src='../images/edit-confrim.png'></td>
+					</tr>
+					<tr>
+						<td><span dir='rtl' class='text' style='font-size:18px;'>ثبت با موفقیت انجام گرفت</span></td>
+					</tr>
+					<tr>
+						<td align='center'>
+							<input type='button' class='btn2' value='بازگشت' onclick='addnews();' />
+						</td>
+						<td></td>
+					</tr>
+				</table>
+				</div>
+		");
+	}else{
+		print("<div align='center' style='color:red;font-size:16px;'>خطا: لطفا تمامی فیلد ها را پر نمایید<br>
+				<div align='center' class='btn2' onclick='addnews()'
+	 	 		style='width:120px;height:30px;line-height:30px;position:absolute;margin-left:-60px;margin-top:5px;'>
+	 			بازگشت <img  src='../images/icon/add.png' style='vertical-align:middle; margin-right:-5px;' />
+	 			</div>");
+	}
+	break;
+	
+	case 'editnews':
+	if(!empty($_POST['title']) && !empty($_POST['body']) ){
+	$id=$_POST['id'];	
+	$title=$_POST['title'];
+	$public= $_POST['public'];
+	$body= strip_tags($_POST['body']);
+		$updatspecialty= $database->updateRow("UPDATE `news` SET `title`=?,`public`=?,`body`=? WHERE `id`=?",
+		array($title,$public,$body,$id));
+		print("
+			<div id='aaa' align='center' style='margin-left:25px;'>
+				<table>
+				<tr>
+				<td align='center'><img src='../images/edit-confrim.png'></td>
+				</tr>
+				<tr>
+					<td><span dir='rtl' class='text' style='font-size:18px;'>ویرایش با موفقیت انجام گرفت</span></td>
+				</tr>
+				<tr>
+				<td align='center'>
+					<input type='button' class='btn2' value='بازگشت' onclick='addnews();' />
+				</td>
+				<td></td>
+				</tr>
+				</table>
+				</div>
+		");
+	}else{
+		print("<div align='center' style='color:red;font-size:16px;'>خطا: لطفا تمامی فیلد ها را پر نمایید<br>
+				<div align='center' class='btn2' onclick='addnews()'
+	 	 		style='width:120px;height:30px;line-height:30px;position:absolute;margin-left:-60px;margin-top:5px;'>
+	 			بازگشت <img  src='../images/icon/add.png' style='vertical-align:middle; margin-right:-5px;' />
+	 			</div>");
+	}
+	
+	break;			
 	}
 ?>

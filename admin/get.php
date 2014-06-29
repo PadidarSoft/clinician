@@ -239,8 +239,54 @@ switch ($item) {
 		<?php
 			break;
 			
-		case 'editnews':
-			echo "editnews";
+		case 'addnews':
+		?>
+		<div id="showresult" dir="rtl" class="text" style="font-size:18px; margin-top:100px;">
+		<span id="error" style="color: Red; font-size:13px; 
+		display: none; position: absolute; margin-top:-30px; margin-right:55px;">
+			* ورودی به صورت عدی بین (0 تا 9)</span>
+		<form action="#">
+		<table>
+			<tr>
+			<td align="left">
+				عنوان:
+			</td>
+			<td>
+				<input type="text" class="input" name="title" style="width:170px;height:30px;"/>
+			</td>
+			</tr>
+			<tr>
+			<td align="left">
+				نوع دسترسی:
+			</td>
+			<td>
+			<select dir="rtl" name="public" class="input" style="width:185px;height:30px;">
+				<option value="1">عمومی</option>
+				<option value="0">مخصوص کاربران</option>
+				
+			</select>
+			</td>
+			</tr>
+			<tr>
+			<td align="left">
+				متن کامل:
+			</td>
+			<td>
+				<textarea name="body" class="input"  style="width: 290px; height: 150px;resize: none;"
+				onkeypress="return imposeMaxLength(this, 150);"  onblur="CheckEmpty();"></textarea>
+			</td>
+			</tr>			
+			<tr>
+			<td></td>
+			<td>
+			<input type="button" onclick="formget(this.form,'send.php?item=addnews')"
+			class="btn2" name="edit" value="ثبت اطلاعات" style="width:95px;" />
+			</td>
+			</tr>
+		</table>
+		</form>
+		</div>		
+		<?php
 			break;		
 }
 }
@@ -443,7 +489,7 @@ if(isset($_GET['editpanel'])){
 				تخصص:
 			</td>
 			<td>
-			<input type="text" style="display:none;" value="<?=$getdoctor['id']?>" name="id"/>										
+			<input type="text" style="display:none;" value="<?=$getspec_ins['id']?>" name="id"/>										
 			<select dir="rtl" name="specialty_id" class="input" style="width:185px;height:30px;">
 			<option selected="selected" value="<?=$getspecialty['id']?>"><?=$getspecialty['title']?>(انتخاب شده)</option>
 			</select>
@@ -485,8 +531,69 @@ if(isset($_GET['editpanel'])){
 		</div>
 		<?php
 			break;
+			
 		case 'editnews':
-			echo "editnews";
+				$getnews = $database->getRow("SELECT * FROM `news` WHERE id =?", array($id));
+		?>
+		<div id="showresult" dir="rtl" class="text" style="font-size:18px;">
+		<span id="error" style="color: Red; font-size:13px; 
+		display: none; position: absolute; margin-top:-30px; margin-right:55px;">
+			* ورودی به صورت عدی بین (0 تا 9)</span>
+		<form action="#">
+		<table>
+			<tr>
+			<td align="left">
+				عنوان:
+			</td>
+			<td>
+				<input type="text" style="display:none;" value="<?=$getnews['id']?>" name="id"/>										
+				<input type="text" class="input" name="title" value="<?=$getnews['title']?>" style="width:170px;height:30px;"/>
+			</td>
+			</tr>
+			<tr>
+			<td align="left">
+				نوع دسترسی:
+			</td>
+			<td>
+			<select dir="rtl" name="public" class="input" style="width:185px;height:30px;">
+				<?php
+			    $public = $getnews['public'];
+				if ($public == '0') {
+				print("
+				<option selected='selected' value='0'>کاربران سایت</option>
+				<option value='1'>عمومی</option>
+				");
+				} else {
+				print("
+				<option selected='selected' value='1'>عمومی</option>
+				<option value='0'>کاربران سایت</option>
+				");
+				}
+		
+				?>
+			</select>
+			</td>
+			</tr>
+			<tr>
+			<td align="left">
+				متن کامل:
+			</td>
+			<td>
+				<textarea name="body" class="input"  style="width: 230px; height: 150px;resize: none;"
+				onkeypress="return imposeMaxLength(this, 150);"  onblur="CheckEmpty();"><?=$getnews['body']?></textarea>
+			</td>
+			</tr>			
+			<tr>
+			<td></td>
+			<td>
+			<input type="button" onclick="formget(this.form,'send.php?item=editnews')"
+			class="btn2" name="edit" value="ثبت اطلاعات" style="width:95px;" />
+			</td>
+			</tr>
+		</table>
+		</form>
+		</div>				
+		<?php
 			break;			
 	}
 
@@ -546,10 +653,37 @@ if(isset($_GET['deletepanel'])){
 		<?php
 			break;					
 		case 'feevisit':
-			echo "feevisit";
+			$getfeevisit = $database->getRow("SELECT * FROM `spec_ins` WHERE id =?", array($id));
+			$getinsurance = $database->getRow("SELECT * FROM `insurance` WHERE id =?", array($getfeevisit['insurance_id']));
+			$getspecialty = $database->getRow("SELECT * FROM `specialty` WHERE id =?", array($getfeevisit['specialty_id']));
+			
+		?>
+			<div id="aaa" align="center">
+			<span dir="rtl" class="text" style="font-size:12px;">آیا شما از حذف آیتم (<b class="error" style="font-size:12px;"><?=$getspecialty['title']?>-<?=$getinsurance['cname']?></b>) اطمینان دارید ؟</span>	
+			<img src="../images/remove.png" style="vertical-align:middle;" />
+			<table>
+			<tr>
+				<td><input id="closebtn" onclick="$('#removepanel').hide();" type="button" value="خیر" class="btn2" /></td>
+				<td><input type="button" value="بله" class="btn2" alt="<?=$getfeevisit['id'];?>"  onclick="deletitem('feevisit',this.alt)"/></td>
+			</tr>
+			</table>
+			</div>
+		<?php
 			break;
-		case 'editnews':
-			echo "editnews";
+		case 'deletenews':
+			$getnews= $database->getRow("SELECT * FROM `news` WHERE id =?", array($id));
+		?>
+			<div id="aaa" align="center">
+			<span dir="rtl" class="text" style="font-size:12px;">آیا شما از حذف آیتم (<b class="error" style="font-size:12px;"><?=$getnews['title']?></b>) اطمینان دارید ؟</span>	
+			<img src="../images/remove.png" style="vertical-align:middle;" />
+			<table>
+			<tr>
+				<td><input id="closebtn" onclick="$('#removepanel').hide();" type="button" value="خیر" class="btn2" /></td>
+				<td><input type="button" value="بله" class="btn2" alt="<?=$getnews['id'];?>"  onclick="deletitem('deletenews',this.alt)"/></td>
+			</tr>
+			</table>
+			</div>
+		<?php
 			break;			
 	}
 
@@ -623,10 +757,42 @@ if(isset($_GET['deleteitem'])){
 			break;
 							
 		case 'feevisit':
-			echo "feevisit";
+		$getinsurance= $database->deleteRow("DELETE FROM `spec_ins` WHERE id =?", array($id));
+		?>
+		<div id="aaa" align="center">
+		<table>
+		<tr>
+		<td><span dir="rtl" class="text" style="font-size:16px;">حذف باموفقیت انجام گرفت</span></td>
+		<td><img src="../images/confrim.png"></td>
+		</tr>
+		<tr>
+		<td align="center">
+			<input type="button" class="btn2" value="بازگشت" onclick="feevisit();" />
+		</td>
+		<td></td>
+		</tr>
+		</table>
+		</div>
+		<?php
 			break;
-		case 'editnews':
-			echo "editnews";
+		case 'deletenews':
+		$getinsurance= $database->deleteRow("DELETE FROM `news` WHERE id =?", array($id));
+		?>
+		<div id="aaa" align="center">
+		<table>
+		<tr>
+		<td><span dir="rtl" class="text" style="font-size:16px;">حذف باموفقیت انجام گرفت</span></td>
+		<td><img src="../images/confrim.png"></td>
+		</tr>
+		<tr>
+		<td align="center">
+			<input type="button" class="btn2" value="بازگشت" onclick="addnews();" />
+		</td>
+		<td></td>
+		</tr>
+		</table>
+		</div>
+		<?php
 			break;			
 	}
 }
@@ -729,7 +895,45 @@ case 'doctorname':
 		<?php		
 		break;
 		
-
+case 'news':
+	$getrows = $database->getRows("SELECT * FROM `news` WHERE `title` LIKE '%$value%' ");
+	foreach ($getrows as $row) {
+?>
+					<div class="nav2" style="width:500px;">
+					<table>
+					<tr>
+					<td align="left">
+						<table>
+						<tr>
+							<td>
+								<a rel="<?=$row['id'] ?>" title="حذف اطلاعات" onclick="removepanel('deletenews',this.rel);">
+								<img class="image2" title="حذف اطلاعات" src="../images/icon/remove.png" style="vertical-align:middle" />
+								</a>
+							</td>
+							<td>
+								<a rel="<?=$row['id'] ?>" title="ویرایش اطلاعات" onclick="editpanel('editnews',this.rel);">
+								<img class="image2" title="ویرایش اطلاعات" src="../images/icon/edit.png" style="vertical-align:middle" />
+								</a>
+							</td>
+						</tr>
+						</table>
+					</td>
+					<td dir="rtl" align="center" style="width:160px;">
+					تاریخ: <?=$row['date'] ?>
+					</td>					
+					<td align="right" style="width:280px;">
+						<?=$row['title'] ?>
+					</td>
+					</tr>
+					</table>
+					</div>
+		<?php
+				}
+		?>
+ 	</div>
+		<?php		
+		break;
+		
 }
 
 }

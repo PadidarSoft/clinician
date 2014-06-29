@@ -1,6 +1,6 @@
 <?php
 include('../libs/bootstrap.php');
-$doctorInfo = auth();
+$managerInfo = auth();
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@ $doctorInfo = auth();
 		 	<hr>
 		 	<table>
 		 	<tr>
-		 	<td><b class="title"><?=$doctorInfo['name']?></b></td>
+		 	<td><b class="title"><?=$managerInfo['name']?></b></td>
 		 	</tr>
 		 	</table>
 		 	<br>
@@ -59,13 +59,12 @@ $doctorInfo = auth();
 		  <img src="../images/home.png" />	
 		<?php
 		if (isset($_POST['edit'])) {
-		if (!empty($_POST['name']) && !empty($_POST['melicode']) &&
-		 !empty($_POST['mobile'])){
+		if (!empty($_POST['name'])){
 			$name = $_POST['name'];
 			if (empty($_POST['password']) && empty($_POST['oldpassword'])) {
-				$password = $doctorInfo['password'];
+				$password = $managerInfo['password'];
 			} else {
-				$oldpass=$doctorInfo['password'];
+				$oldpass=$managerInfo['password'];
 				if (__md5($_POST['oldpassword'])!==$oldpass){
 					die ("<SCRIPT LANGUAGE='JavaScript'>
 	    					window.alert('کلمه عبور قبلی شما صحیح نمی باشد')
@@ -75,10 +74,6 @@ $doctorInfo = auth();
 				$password=__md5($_POST['password']);
 				}
 
-			$melicode = $_POST['melicode'];
-			$gender = $_POST['gender'];
-			$mobile = $_POST['mobile'];
-			$education = $_POST['education'];
 			if (!empty($_POST['email'])) {
 				if (filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL)) {
 					$email = $_POST['email'];
@@ -91,45 +86,10 @@ $doctorInfo = auth();
 			} else {
 				$email = "";
 			}
-			$address = strip_tags($_POST['address']);
-			$allowed_filetypes = array('.jpg', '.gif', '.bmp', '.png');
-			$max_filesize = 524288;
-			$upload_path = '../images/doctor/';
-			$filename = $_FILES['img']['name'];
-			if (!empty($filename)) {
-				$ext = substr($filename, strpos($filename, '.'), strlen($filename) - 1);
-				if (!in_array($ext, $allowed_filetypes)) {
-					die ("<SCRIPT LANGUAGE='JavaScript'>
-   						window.alert(' فرمت فایل انتخابی مناسب نمی باشد')
-						window.history.back();
-						</SCRIPT>");
-				}
 
-				if (filesize($_FILES['img']['tmp_name']) > $max_filesize) {
-					die ("<SCRIPT LANGUAGE='JavaScript'>
-   						window.alert(' حجم فایل انتخابی زیاد می باشد(حداکثر 500 کیلوبایت)')
-						window.history.back();
-						</SCRIPT>");
-				}
-				$random = rand(1000, 10000);
-				$tname = $random . $filename;
-				move_uploaded_file($_FILES['img']['tmp_name'], $upload_path . $tname);
-				$sname = $random . $filename;
-			} else {
-				$userpic=$doctorInfo['img'];
-				if($userpic=='none.png'){
-					$sname = 'none.png';
-				}else{
-					$sname=$doctorInfo['img'];
-				}
-			}
-
-				$updateuser = $database->updateRow("UPDATE  `doctor`
-				 SET `name`=?,`password`=?,`education`=?,
-				`melicode`=?,`gender`=?,`img`=?,
-				`email`=?,`mobile`=?,`address`=? WHERE `id`=?"
-				 , array($name,	$password, $education,$melicode,
-				  $gender, $sname, $email, $mobile, $address,$doctorInfo['id']));
+				$updateuser = $database->updateRow("UPDATE  `manager`
+				 SET `name`=?,`password`=?,`email`=? WHERE `id`=?"
+				 , array($name,	$password, $email,$managerInfo['id']));
 				  print("<div align='center' class='box-message'>
 				  بروزرسانی با موفقیت انجام گرفت</div> ");
 		} else {
