@@ -146,8 +146,7 @@ switch ($item) {
 		break;
 		
 	case 'editdoctor':
-	if(
-	!empty($_POST['name']) && !empty($_POST['code'])&& !empty($_POST['mobile'])
+	if(!empty($_POST['name']) && !empty($_POST['code'])&& !empty($_POST['mobile'])
 	){
 	$id=$_POST['id'];	
 	$name=$_POST['name'];

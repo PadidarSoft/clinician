@@ -40,16 +40,16 @@ function pauth(){
 
 function dauth(){
 	$database = new db("root", "", "localhost", "clinician", array(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES 'utf-8'"));
-	if(!isset($_SESSION['doctor_id'])){
+	if(!isset($_SESSION['d_id'])){
 		header('Location: index.php?page=login');
 		exit();
 	}
-	$countuser = $database->getCountRow("SELECT * FROM doctor WHERE id =? ", array($_SESSION['doctor_id']));
+	$countuser = $database->getCountRow("SELECT * FROM doctor WHERE id =? ", array($_SESSION['d_id']));
 	if($countuser<1){
 		header('Location: index.php?page=login');
 		exit();
 	}
-	$userInfo = $database->getRow("SELECT * FROM doctor WHERE id =?", array($_SESSION['doctor_id']));
+	$userInfo = $database->getRow("SELECT * FROM doctor WHERE id =?", array($_SESSION['d_id']));
 	return $userInfo;
 }
 
@@ -67,7 +67,7 @@ function pateint_logout(){
 }
 
 function doctor_logout(){
-	unset($_SESSION['doctor_id']);
+	unset($_SESSION['d_id']);
 	unset($_SESSION['doctor_error']);
 	unset($_SESSION['showdate']);
 	return true;

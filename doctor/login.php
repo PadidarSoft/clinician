@@ -11,7 +11,7 @@ if(!empty($_POST['username']) && !empty($_POST['password'])){
 	}
 		$selectuser = $database->getRow("SELECT * FROM doctor WHERE username =? and password=?", array($username,$password));
 		$_SESSION["doctor_time"] = time();
-		$_SESSION["doctor_id"] = $selectuser['id'];
+		$_SESSION["d_id"] = $selectuser['id'];
 		$_SESSION['doctor_error'] = '';
 		header("Location:personal.php?page=home");
 		exit();

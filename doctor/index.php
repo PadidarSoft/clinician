@@ -17,7 +17,7 @@ function trim_value(&$value)
 {
 	$value = trim($value);
 }
-if(isset($_SESSION['doctor_id'])){
+if(isset($_SESSION['d_id'])){
 	header('Location: personal.php?page=home');
 	exit();
 }

@@ -286,7 +286,7 @@ switch ($page) {
 		}
 		$specialty = $_SESSION['specialty'];
 		$time = $_SESSION['time_reserve'];
-		$doctor = $_SESSION['doctor_id'];
+		$doctor = $_SESSION['d_id'];
 		$pateint = $userInfo['id'];
 		$code = mt_rand(1000000000, 9999999999);
 		$chkvisittime = $database->getCountRow("SELECT pateint_id FROM `visit_time` WHERE doctor_id =? and date=? ", array($doctor, $date));

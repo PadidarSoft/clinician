@@ -1,14 +1,20 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 4.1.6
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 03, 2014 at 10:55 PM
+-- Generation Time: Jul 03, 2014 at 10:57 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `clinician`
@@ -283,3 +289,7 @@ INSERT INTO `visit_time` (`id`, `specialty_id`, `doctor_id`, `pateint_id`, `insu
 (22, 2, 4, 1, 1, '1393/04/11', '00:00', 1303059438),
 (23, 2, 4, 1, 1, '1393/04/13', '11:30', 1079216714),
 (24, 2, 4, 1, 1, '1393/04/10', '09:56', 1215268066);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
